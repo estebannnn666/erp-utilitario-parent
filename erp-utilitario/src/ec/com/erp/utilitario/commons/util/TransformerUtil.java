@@ -29,8 +29,6 @@ import org.jdom.transform.JDOMResult;
 import org.jdom.transform.JDOMSource;
 import org.xml.sax.SAXException;
 
-import ec.com.erp.cliente.common.exception.ERPException;
-
 /**
  * 
  * @author Esteban Gudino
@@ -171,18 +169,18 @@ public class TransformerUtil
 	   * 
 	   * @param pString
 	   * @return
-	   * @throws ERPException
+	   * @throws Exception
 	   */
-	  public static Document stringToXML(String pString)  throws ERPException
+	  public static Document stringToXML(String pString)  throws Exception
 	  {
 		  Document doc = null;
 		  SAXBuilder parser = new SAXBuilder();
 		  try {
 			  doc = parser.build(new StringReader(pString));
 		  } catch (JDOMException e) {
-			  throw new ERPException("Error al tratar de convertir un string xml a Document", e);
+			  throw new Exception("Error al tratar de convertir un string xml a Document", e);
 		  } catch (IOException e) {
-			  throw new ERPException("Error al tratar de convertir un string xml a Document", e);
+			  throw new Exception("Error al tratar de convertir un string xml a Document", e);
 		  }
 		  return doc;
 	  }

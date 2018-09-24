@@ -6,8 +6,6 @@ import javax.xml.transform.URIResolver;
 import org.jdom.Document;
 import org.jdom.transform.JDOMSource;
 
-import ec.com.erp.cliente.common.exception.ERPException;
-
 /**
  * Clase implementacion para resolver urls
  * @author Esteban Gudino
@@ -38,7 +36,7 @@ class UrlResolver implements URIResolver
 			Document xsltDoc = TransformerUtil.stringToXML(this.xsltref);
 			xsltSource = new JDOMSource(xsltDoc);
 		}
-		catch (ERPException e) {
+		catch (Exception e) {
 		}
 		return xsltSource;
 	}
