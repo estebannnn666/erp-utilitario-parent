@@ -60,6 +60,10 @@ public class ClientProvider {
     	            client.setDocument(value.get("document").getAsString());
     	            client.setEmail(value.get("email").getAsString());
     	            client.setName(value.get("name").getAsString());
+    	            client.setFirstName(value.get("firstName") != null ? value.get("firstName").getAsString() : null);
+    	            client.setSecondName(value.get("secondName") != null ? value.get("secondName").getAsString() : null);
+    	            client.setFirstLastName(value.get("firstLastName") != null ? value.get("firstLastName").getAsString() : null);
+    	            client.setSecondLastName(value.get("secondLastName") != null ? value.get("secondLastName").getAsString() : null);
     	            client.setTelephone(value.get("telephone").getAsString());
     	            client.setType(value.get("type").getAsString());
     	            clientsFireBase.add(client);
