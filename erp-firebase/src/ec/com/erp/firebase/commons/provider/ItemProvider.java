@@ -5,8 +5,12 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -24,7 +28,7 @@ public class ItemProvider {
 	private static DatabaseReference database;
 
 	public static void main(String [] args) throws InterruptedException, ExecutionException, IOException {
-		obtainItemFirebase();
+		obtainImagesItemFirebase();
 	}
 	
 	/**
@@ -56,16 +60,29 @@ public class ItemProvider {
 	 * @throws ExecutionException
 	 */
 	public static Collection<ImageItem> obtainImagesItemFirebase() throws InterruptedException, ExecutionException{
-		
 		Collection<ImageItem> itemsFireBase = new ArrayList<>();
 		try {
 			String token = FireBaseUtil.getTokenAccesFirebase();
     	    String items = FireBaseUtil.getDataBaseResults(token, ProviderConstant.URL_GET_IMAGES);
-    	    System.out.println("success");
-    	    Type listType = new TypeToken<ArrayList<ImageItem>>(){}.getType();
-    	    Gson g = new Gson();
-    	    itemsFireBase = g.fromJson(items, listType);
-		 } catch (IOException e) {
+			String typeDowload = items.substring(0, 1);
+			
+			if(typeDowload.equals(ProviderConstant.CHARACTER_KEYS)) {
+		        // convert JSON string to Map
+	    	    ObjectMapper mapper = new ObjectMapper();
+	            Map<String, ImageItem> map = mapper.readValue(items, new TypeReference<Map<String, ImageItem>>() {});
+	            for(Entry<String, ImageItem> valor: map.entrySet()){
+	            	ImageItem imageItem = new ImageItem();
+	            	imageItem.setId(valor.getValue().getId());
+	            	imageItem.setBarCode(valor.getValue().getBarCode());
+	            	imageItem.setImage(valor.getValue().getImage());
+	            	itemsFireBase.add(imageItem);
+	            }
+            }else {
+	    	    Type listType = new TypeToken<ArrayList<ImageItem>>(){}.getType();
+	    	    Gson g = new Gson();
+	    	    itemsFireBase = g.fromJson(items, listType);
+            }
+		 } catch (Exception e) {
             e.printStackTrace();
 	     }
 		return itemsFireBase;

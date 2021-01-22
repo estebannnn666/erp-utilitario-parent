@@ -16,4 +16,5 @@ public class ProviderConstant {
 	public final static String URL_GET_INVOICES = "https://mobileinvoice-55cf6.firebaseio.com/Invoices.json";
 	public final static String URL_GET_ORDERS = "https://mobileinvoice-55cf6.firebaseio.com/Orders.json";
 	public final static String URL_GET_IMAGES = "https://mobileinvoice-55cf6.firebaseio.com/Images.json";
+	public final static String CHARACTER_KEYS = "{";
 }
