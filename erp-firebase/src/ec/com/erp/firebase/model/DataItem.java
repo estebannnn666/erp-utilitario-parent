@@ -8,7 +8,8 @@ public class DataItem implements Serializable{
 
 	private Integer id; 
 	private String barCode; 
-	private String commissionPercentage; 
+	private String commissionPercentage;
+	private String wholesaleCommissionPercentage; 
 	private String cost; 
 	private String nameItem; 
 	private String priceRetail; 
@@ -61,7 +62,11 @@ public class DataItem implements Serializable{
 	}
 	public void setStock(String stock) {
 		this.stock = stock;
+	}
+	public String getWholesaleCommissionPercentage() {
+		return wholesaleCommissionPercentage;
+	}
+	public void setWholesaleCommissionPercentage(String wholesaleCommissionPercentage) {
+		this.wholesaleCommissionPercentage = wholesaleCommissionPercentage;
 	} 
-	
-	
 }
