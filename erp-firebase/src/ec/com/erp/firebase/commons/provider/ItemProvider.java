@@ -16,15 +16,16 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import ec.com.erp.firebase.commons.constantes.ProviderConstant;
+import ec.com.erp.firebase.model.ImageItem;
 import ec.com.erp.firebase.model.Item;
 
 public class ItemProvider {
 	
 	private static DatabaseReference database;
 
-//	public static void main(String [] args) throws InterruptedException, ExecutionException, IOException {
-//		obtainItemFirebase();
-//	}
+	public static void main(String [] args) throws InterruptedException, ExecutionException, IOException {
+		obtainItemFirebase();
+	}
 	
 	/**
 	 * Method for get the list of items of fire base data.
@@ -36,18 +37,34 @@ public class ItemProvider {
 		
 		Collection<Item> itemsFireBase = new ArrayList<>();
 		try {
-			
 			String token = FireBaseUtil.getTokenAccesFirebase();
-			System.out.println("Token: "+token);
-			
     	    String items = FireBaseUtil.getDataBaseResults(token, ProviderConstant.URL_GET_ITEMS);
     	    System.out.println("success");
-    	    System.out.println("Resp:"+items);
-    	    
     	    Type listType = new TypeToken<ArrayList<Item>>(){}.getType();
     	    Gson g = new Gson();
     	    itemsFireBase = g.fromJson(items, listType);
-    	    	
+		 } catch (IOException e) {
+            e.printStackTrace();
+	     }
+		return itemsFireBase;
+	}
+	
+	/**
+	 * Method for get the list of image items of fire base data.
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public static Collection<ImageItem> obtainImagesItemFirebase() throws InterruptedException, ExecutionException{
+		
+		Collection<ImageItem> itemsFireBase = new ArrayList<>();
+		try {
+			String token = FireBaseUtil.getTokenAccesFirebase();
+    	    String items = FireBaseUtil.getDataBaseResults(token, ProviderConstant.URL_GET_IMAGES);
+    	    System.out.println("success");
+    	    Type listType = new TypeToken<ArrayList<ImageItem>>(){}.getType();
+    	    Gson g = new Gson();
+    	    itemsFireBase = g.fromJson(items, listType);
 		 } catch (IOException e) {
             e.printStackTrace();
 	     }
