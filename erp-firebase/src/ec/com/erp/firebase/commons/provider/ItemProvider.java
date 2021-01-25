@@ -112,7 +112,7 @@ public class ItemProvider {
 	
 	/**
 	 * Method for create or update to items.
-	 * @param client The data of client
+	 * @param itemCols The data of items
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 * @throws IOException
@@ -121,6 +121,20 @@ public class ItemProvider {
 		initialiceFireBase();
 		for(Item item: itemCols){
 			database.child("Items").child(""+item.getDataItem().getId()).setValueAsync(item).get();
+		}
+	}
+	
+	/**
+	 * Method for create or update to images of items.
+	 * @param imageItemCols The data of images items
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 * @throws IOException
+	 */
+	public static void createUpdateImageItem(Collection<ImageItem> imageItemCols) throws InterruptedException, ExecutionException, IOException{
+		initialiceFireBase();
+		for(ImageItem imageItem: imageItemCols){
+			database.child("Images").child(""+imageItem.getId()).setValueAsync(imageItem).get();
 		}
 	}
 }
