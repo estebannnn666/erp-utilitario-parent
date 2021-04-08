@@ -58,7 +58,7 @@ public class ClientProvider {
     	            client.setBuyType(value.get("buyType").getAsString());
     	            client.setCity(value.get("city").getAsString());
     	            client.setDocument(value.get("document").getAsString());
-    	            client.setEmail(value.get("email").getAsString());
+    	            client.setEmail(value.get("email") != null ? value.get("email").getAsString() : null);
     	            client.setName(value.get("name").getAsString());
     	            client.setFirstName(value.get("firstName") != null ? value.get("firstName").getAsString() : null);
     	            client.setSecondName(value.get("secondName") != null ? value.get("secondName").getAsString() : null);
@@ -66,6 +66,9 @@ public class ClientProvider {
     	            client.setSecondLastName(value.get("secondLastName") != null ? value.get("secondLastName").getAsString() : null);
     	            client.setTelephone(value.get("telephone").getAsString());
     	            client.setType(value.get("type").getAsString());
+    	            client.setUserId(value.get("userId") != null ? value.get("userId").getAsString() : null);
+    	            client.setZoneValueCode(value.get("zoneValueCode") != null ? value.get("zoneValueCode").getAsString() : null);
+    	            client.setZoneTypeCode(value.get("zoneTypeCode") != null ? value.get("zoneTypeCode").getAsInt() : null);
     	            clientsFireBase.add(client);
     	        } 
     	    }

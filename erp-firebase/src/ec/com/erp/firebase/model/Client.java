@@ -19,6 +19,10 @@ public class Client implements Serializable{
 	private String secondLastName;
 	private String telephone; 
 	private String type;
+	private String userId;
+	private String zoneValueCode;
+	private Integer zoneTypeCode;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -96,5 +100,23 @@ public class Client implements Serializable{
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getZoneValueCode() {
+		return zoneValueCode;
+	}
+	public void setZoneValueCode(String zoneValueCode) {
+		this.zoneValueCode = zoneValueCode;
+	}
+	public Integer getZoneTypeCode() {
+		return zoneTypeCode;
+	}
+	public void setZoneTypeCode(Integer zoneTypeCode) {
+		this.zoneTypeCode = zoneTypeCode;
 	} 
 }
