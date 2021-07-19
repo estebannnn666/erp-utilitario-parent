@@ -14,16 +14,18 @@ import javax.xml.ws.ResponseWrapper;
  * Generated source version: 3.1.4
  * 
  */
-@WebService(targetNamespace = "http://ec.gob.sri.ws.recepcion", name = "RecepcionComprobantes")
+@WebService(targetNamespace = "http://ec.gob.sri.ws.recepcion", name = "RecepcionComprobantesOffline")
 @XmlSeeAlso({ObjectFactory.class})
-public interface RecepcionComprobantes {
+public interface RecepcionComprobantesOffline {
 
     @WebMethod
-    @RequestWrapper(localName = "validarComprobante", targetNamespace = "http://ec.gob.sri.ws.recepcion", className = "ec.facturacion.electronica.ws.recepcion.ValidarComprobante")
-    @ResponseWrapper(localName = "validarComprobanteResponse", targetNamespace = "http://ec.gob.sri.ws.recepcion", className = "ec.facturacion.electronica.ws.recepcion.ValidarComprobanteResponse")
+    @RequestWrapper(localName = "validarComprobante", targetNamespace = "http://ec.gob.sri.ws.recepcion", className = "ec.com.erp.facturacion.electronica.ws.recepcion.ValidarComprobante")
+    @ResponseWrapper(localName = "validarComprobanteResponse", targetNamespace = "http://ec.gob.sri.ws.recepcion", className = "ec.com.erp.facturacion.electronica.ws.recepcion.ValidarComprobanteResponse")
     @WebResult(name = "RespuestaRecepcionComprobante", targetNamespace = "")
-    public ec.com.erp.facturacion.electronica.ws.recepcion.RespuestaSolicitud validarComprobante(
+    public RespuestaSolicitud validarComprobante(
         @WebParam(name = "xml", targetNamespace = "")
         byte[] xml
     );
+    
+    
 }

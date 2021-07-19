@@ -61,11 +61,11 @@ import ec.com.erp.facturacion.electronica.modelo.Pago;
 import ec.com.erp.facturacion.electronica.modelo.TotalImpuesto;
 import ec.com.erp.facturacion.electronica.util.FirmaXadesBesUtil;
 import ec.com.erp.facturacion.electronica.util.XmlUtil;
-import ec.com.erp.facturacion.electronica.ws.autorizacion.AutorizacionComprobantes;
-import ec.com.erp.facturacion.electronica.ws.autorizacion.AutorizacionComprobantesService;
+import ec.com.erp.facturacion.electronica.ws.autorizacion.AutorizacionComprobantesOffline;
+import ec.com.erp.facturacion.electronica.ws.autorizacion.AutorizacionComprobantesOfflineService;
 import ec.com.erp.facturacion.electronica.ws.autorizacion.RespuestaComprobante;
-import ec.com.erp.facturacion.electronica.ws.recepcion.RecepcionComprobantes;
-import ec.com.erp.facturacion.electronica.ws.recepcion.RecepcionComprobantesService;
+import ec.com.erp.facturacion.electronica.ws.recepcion.RecepcionComprobantesOffline;
+import ec.com.erp.facturacion.electronica.ws.recepcion.RecepcionComprobantesOfflineService;
 import ec.com.erp.facturacion.electronica.ws.recepcion.RespuestaSolicitud;
 
 /**
@@ -95,8 +95,8 @@ public class SuscribirRESTService {
 			ByteArrayOutputStream baosFacturaFirmada = new ByteArrayOutputStream();
 			firmaXadesBesUtil.firmarDocumento(new ByteArrayInputStream(baosFactura.toByteArray()), baosFacturaFirmada);
 
-			RecepcionComprobantesService webServiceRecepcion = new RecepcionComprobantesService();
-			RecepcionComprobantes port1 = webServiceRecepcion.getRecepcionComprobantesPort();
+			RecepcionComprobantesOfflineService webServiceRecepcion = new RecepcionComprobantesOfflineService();
+			RecepcionComprobantesOffline port1 = webServiceRecepcion.getRecepcionComprobantesOfflinePort();
 			RespuestaSolicitud respuestaSolicitud = port1.validarComprobante(baosFacturaFirmada.toByteArray());
 
 			BindingProvider bindingProvider = (BindingProvider) port1;
@@ -112,9 +112,9 @@ public class SuscribirRESTService {
 
 			Thread.sleep(4500);
 
-			AutorizacionComprobantesService webServiceAutorizacion = new AutorizacionComprobantesService();
+			AutorizacionComprobantesOfflineService webServiceAutorizacion = new AutorizacionComprobantesOfflineService();
 
-			AutorizacionComprobantes port2 = webServiceAutorizacion.getAutorizacionComprobantesPort();
+			AutorizacionComprobantesOffline port2 = webServiceAutorizacion.getAutorizacionComprobantesOfflinePort();
 			RespuestaComprobante respuestaComprobante = port2.autorizacionComprobante(factura.getInfoTributaria().getClaveAcceso());
 			if (!respuestaComprobante.getAutorizaciones().getAutorizacion().isEmpty()) {
 				for (ec.com.erp.facturacion.electronica.ws.autorizacion.Mensaje mensaje : respuestaComprobante

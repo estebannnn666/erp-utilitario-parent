@@ -167,7 +167,7 @@ public class FacturaUtil {
 		Random rn = new Random();
 		int n = 100000001 - 999999999 + 1;
 		int i = rn.nextInt() % n;
-		int random = 100000000 + i;
+		int random = 1000000000 + i;
 		if(random < 0) {
 			random = random*-1;
 		}
