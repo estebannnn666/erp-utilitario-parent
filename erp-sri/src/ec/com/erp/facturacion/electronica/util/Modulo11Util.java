@@ -15,13 +15,15 @@ public class Modulo11Util {
 		int total = 0;
 		int verificador = 0;
 		for (int i = resultados.length - 1; i >= 0; i--) {
-			resultados[i] = Integer.parseInt(Character.toString(cadena.charAt(i)));
-			resultados[i] = resultados[i] * multiplicador;
-			multiplicador++;
-			if (multiplicador > baseMultiplicador) {
-				multiplicador = 2;
+			if(!Character.toString(cadena.charAt(i)).equals("-")) {
+				resultados[i] = Integer.parseInt(Character.toString(cadena.charAt(i)));
+				resultados[i] = resultados[i] * multiplicador;
+				multiplicador++;
+				if (multiplicador > baseMultiplicador) {
+					multiplicador = 2;
+				}
+				total += resultados[i];
 			}
-			total += resultados[i];
 		}
 		if (total == 0 || total == 1) {
 			verificador = 0;

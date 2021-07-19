@@ -9,13 +9,13 @@ public enum AmbienteEnum {
 	 * Ambiente de pruebas
 	 */
 	@XmlEnumValue("1")
-	PRUEBAS("https://celcer.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantes?wsdl", "https://celcer.sri.gob.ec/comprobantes-electronicos-ws/AutorizacionComprobantes?wsdl", "1"),
+	PRUEBAS("https://celcer.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantesOffline?wsdl", "https://celcer.sri.gob.ec/comprobantes-electronicos-ws/AutorizacionComprobantesOffline?wsdl", "1"),
 
 	/**
 	 * Ambiente de produccion
 	 */
 	@XmlEnumValue("2")
-	PRODUCCION("https://cel.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantes?wsdl", "https://cel.sri.gob.ec/comprobantes-electronicos-ws/AutorizacionComprobantes?wsdl", "2");
+	PRODUCCION("https://cel.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantesOffline?wsdl", "https://cel.sri.gob.ec/comprobantes-electronicos-ws/AutorizacionComprobantesOffline?wsdl", "2");
 
 	private String urlRecepcion;
 	private String urlAutorizacion;

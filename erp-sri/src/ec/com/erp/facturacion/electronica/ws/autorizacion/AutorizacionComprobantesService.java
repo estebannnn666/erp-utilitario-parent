@@ -15,24 +15,24 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 3.1.4
  * 
  */
-@WebServiceClient(name = "AutorizacionComprobantesService", 
-                  wsdlLocation = "META-INF/wsdl/AutorizacionComprobantes.wsdl",
+@WebServiceClient(name = "AutorizacionComprobantesOfflineService", 
+                  wsdlLocation = "META-INF/wsdl/AutorizacionComprobantesOffline.wsdl",
                   targetNamespace = "http://ec.gob.sri.ws.autorizacion") 
 public class AutorizacionComprobantesService extends Service {
 
     public final static URL WSDL_LOCATION;
 
-    public final static QName SERVICE = new QName("http://ec.gob.sri.ws.autorizacion", "AutorizacionComprobantesService");
-    public final static QName AutorizacionComprobantesPort = new QName("http://ec.gob.sri.ws.autorizacion", "AutorizacionComprobantesPort");
+    public final static QName SERVICE = new QName("http://ec.gob.sri.ws.autorizacion", "AutorizacionComprobantesOfflineService");
+    public final static QName AutorizacionComprobantesPort = new QName("http://ec.gob.sri.ws.autorizacion", "AutorizacionComprobantesOfflinePort");
     static {
         URL url = null;
         try {
         	URL baseUrl = AutorizacionComprobantesService.class.getClassLoader().getResource(".");
-			url = new URL(baseUrl, "META-INF/wsdl/AutorizacionComprobantes.wsdl");
+			url = new URL(baseUrl, "META-INF/wsdl/AutorizacionComprobantesOffline.wsdl");
         } catch (MalformedURLException e) {
             java.util.logging.Logger.getLogger(AutorizacionComprobantesService.class.getName())
                 .log(java.util.logging.Level.INFO, 
-                     "Can not initialize the default wsdl from {0}", "file:AutorizacionComprobantes.wsdl");
+                     "Can not initialize the default wsdl from {0}", "file:AutorizacionComprobantesOffline.wsdl");
         }
         WSDL_LOCATION = url;
     }
@@ -69,7 +69,7 @@ public class AutorizacionComprobantesService extends Service {
      * @return
      *     returns AutorizacionComprobantes
      */
-    @WebEndpoint(name = "AutorizacionComprobantesPort")
+    @WebEndpoint(name = "AutorizacionComprobantesOfflinePort")
     public AutorizacionComprobantes getAutorizacionComprobantesPort() {
         return super.getPort(AutorizacionComprobantesPort, AutorizacionComprobantes.class);
     }
@@ -81,7 +81,7 @@ public class AutorizacionComprobantesService extends Service {
      * @return
      *     returns AutorizacionComprobantes
      */
-    @WebEndpoint(name = "AutorizacionComprobantesPort")
+    @WebEndpoint(name = "AutorizacionComprobantesOfflinePort")
     public AutorizacionComprobantes getAutorizacionComprobantesPort(WebServiceFeature... features) {
         return super.getPort(AutorizacionComprobantesPort, AutorizacionComprobantes.class, features);
     }

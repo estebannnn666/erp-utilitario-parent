@@ -32,13 +32,13 @@ import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.ValidationException;
 import javax.xml.ws.BindingProvider;
 
 import ec.com.erp.facturacion.electronica.enumeradores.AmbienteEnum;
@@ -90,7 +90,7 @@ public class SuscribirRESTService {
 
 			Factura factura = crearFactura(suscripcion);
 			ByteArrayOutputStream baosFactura = (new XmlUtil()).convertirObjetoAXml(Factura.class, factura);
-			FirmaXadesBesUtil firmaXadesBesUtil = new FirmaXadesBesUtil("src/test/resources/p12/test.p12",
+			FirmaXadesBesUtil firmaXadesBesUtil = new FirmaXadesBesUtil("src/test/resources/p12/JOHANAPAMELABENAVIDESBLANCO140721193429.p12",
 					"2006Andrea");
 			ByteArrayOutputStream baosFacturaFirmada = new ByteArrayOutputStream();
 			firmaXadesBesUtil.firmarDocumento(new ByteArrayInputStream(baosFactura.toByteArray()), baosFacturaFirmada);
@@ -115,8 +115,7 @@ public class SuscribirRESTService {
 			AutorizacionComprobantesService webServiceAutorizacion = new AutorizacionComprobantesService();
 
 			AutorizacionComprobantes port2 = webServiceAutorizacion.getAutorizacionComprobantesPort();
-			RespuestaComprobante respuestaComprobante = port2
-					.autorizacionComprobante(factura.getInfoTributaria().getClaveAcceso());
+			RespuestaComprobante respuestaComprobante = port2.autorizacionComprobante(factura.getInfoTributaria().getClaveAcceso());
 			if (!respuestaComprobante.getAutorizaciones().getAutorizacion().isEmpty()) {
 				for (ec.com.erp.facturacion.electronica.ws.autorizacion.Mensaje mensaje : respuestaComprobante
 						.getAutorizaciones().getAutorizacion().get(0).getMensajes().getMensaje()) {
@@ -248,10 +247,10 @@ public class SuscribirRESTService {
 		InfoTributaria infoTributaria = new InfoTributaria();
 		infoTributaria.setAmbiente(AmbienteEnum.PRUEBAS);
 		infoTributaria.setTipoEmision(TipoEmisionEnum.NORMAL);
-		infoTributaria.setRazonSocial("ANDREA ESTEFANIA SUQUILLO NAVARRETE");
+		infoTributaria.setRazonSocial("JOHANA PAMELA BENAVIDES BLANCO");
 		infoTributaria.setNombreComercial("NOMBRE COMERCIAL");
 		infoTributaria.setDirMatriz("DIRECCION MATRIZ");
-		infoTributaria.setRuc("1719761767001");
+		infoTributaria.setRuc("1003635263001");
 		infoTributaria.setCodDoc("01");
 		infoTributaria.setEstab("001");
 		infoTributaria.setPtoEmi("100");

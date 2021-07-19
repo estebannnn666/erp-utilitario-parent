@@ -13,23 +13,22 @@ import javax.xml.ws.Service;
  * Generated source version: 3.1.4
  * 
  */
-@WebServiceClient(name = "RecepcionComprobantesService", wsdlLocation = "META-INF/wsdl/RecepcionComprobantes.wsdl", targetNamespace = "http://ec.gob.sri.ws.recepcion")
+@WebServiceClient(name = "RecepcionComprobantesOfflineService", wsdlLocation = "META-INF/wsdl/RecepcionComprobantesOffline.wsdl", targetNamespace = "http://ec.gob.sri.ws.recepcion")
 public class RecepcionComprobantesService extends Service {
 
 	public final static URL WSDL_LOCATION;
 
-	public final static QName SERVICE = new QName("http://ec.gob.sri.ws.recepcion", "RecepcionComprobantesService");
-	public final static QName RecepcionComprobantesPort = new QName("http://ec.gob.sri.ws.recepcion",
-			"RecepcionComprobantesPort");
+	public final static QName SERVICE = new QName("http://ec.gob.sri.ws.recepcion", "RecepcionComprobantesOfflineService");
+	public final static QName RecepcionComprobantesPort = new QName("http://ec.gob.sri.ws.recepcion", "RecepcionComprobantesOfflinePort");
 	static {
 		URL url = null;
 		try {
 			URL baseUrl = RecepcionComprobantesService.class.getClassLoader().getResource(".");
-			url = new URL(baseUrl, "META-INF/wsdl/RecepcionComprobantes.wsdl");
+			url = new URL(baseUrl, "META-INF/wsdl/RecepcionComprobantesOffline.wsdl");
 		} catch (MalformedURLException e) {
 			java.util.logging.Logger.getLogger(RecepcionComprobantesService.class.getName()).log(
 					java.util.logging.Level.INFO, "Can not initialize the default wsdl from {0}",
-					"file:RecepcionComprobantes.wsdl");
+					"file:RecepcionComprobantesOffline.wsdl");
 		}
 		WSDL_LOCATION = url;
 	}
@@ -62,7 +61,7 @@ public class RecepcionComprobantesService extends Service {
 	 *
 	 * @return returns RecepcionComprobantes
 	 */
-	@WebEndpoint(name = "RecepcionComprobantesPort")
+	@WebEndpoint(name = "RecepcionComprobantesOfflinePort")
 	public RecepcionComprobantes getRecepcionComprobantesPort() {
 		return super.getPort(RecepcionComprobantesPort, RecepcionComprobantes.class);
 	}
@@ -76,7 +75,7 @@ public class RecepcionComprobantesService extends Service {
 	 *            values.
 	 * @return returns RecepcionComprobantes
 	 */
-	@WebEndpoint(name = "RecepcionComprobantesPort")
+	@WebEndpoint(name = "RecepcionComprobantesOfflinePort")
 	public RecepcionComprobantes getRecepcionComprobantesPort(WebServiceFeature... features) {
 		return super.getPort(RecepcionComprobantesPort, RecepcionComprobantes.class, features);
 	}
