@@ -130,13 +130,13 @@ public class ConstruirFacturaUtil {
 		InfoTributaria infoTributaria = new InfoTributaria();
 		infoTributaria.setAmbiente(AmbienteEnum.PRUEBAS);
 		infoTributaria.setTipoEmision(TipoEmisionEnum.NORMAL);
-		if(rucFactElectronica.equals(ERPConstantes.RUC_PRINCIPAL)) {
+		if(rucFactElectronica.equals(ERPConstantes.TIPO_RUC_UNO)) {
 			infoTributaria.setRazonSocial(FacturacionElectronicaEnum.RUCPRINCIPA.getRazonSocial());
 			infoTributaria.setNombreComercial(FacturacionElectronicaEnum.RUCPRINCIPA.getNombreComercial());
 			infoTributaria.setDirMatriz(FacturacionElectronicaEnum.RUCPRINCIPA.getDireccion());
 			infoTributaria.setRuc(FacturacionElectronicaEnum.RUCPRINCIPA.getRuc());
 		}
-		if(rucFactElectronica.equals(ERPConstantes.RUC_SECUNDARIO)) {
+		if(rucFactElectronica.equals(ERPConstantes.TIPO_RUC_DOS)) {
 			infoTributaria.setRazonSocial(FacturacionElectronicaEnum.RUCSECUNDARIO.getRazonSocial());
 			infoTributaria.setNombreComercial(FacturacionElectronicaEnum.RUCSECUNDARIO.getNombreComercial());
 			infoTributaria.setDirMatriz(FacturacionElectronicaEnum.RUCSECUNDARIO.getDireccion());

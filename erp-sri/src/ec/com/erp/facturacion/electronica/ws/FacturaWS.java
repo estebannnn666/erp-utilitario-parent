@@ -2,19 +2,24 @@ package ec.com.erp.facturacion.electronica.ws;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.cert.CertificateException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 import javax.xml.ws.BindingProvider;
 
 import org.junit.Test;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -28,10 +33,36 @@ import ec.com.erp.facturacion.electronica.ws.autorizacion.RespuestaComprobante;
 import ec.com.erp.facturacion.electronica.ws.recepcion.RecepcionComprobantesOffline;
 import ec.com.erp.facturacion.electronica.ws.recepcion.RecepcionComprobantesOfflineService;
 import ec.com.erp.facturacion.electronica.ws.recepcion.RespuestaSolicitud;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRParameter;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.query.JRXPathQueryExecuterFactory;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRXmlUtils;
 
 public class FacturaWS{
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
+	public void ejecutaImpresionRIDE() throws JRException, IOException {
+		Map params = new HashMap();
+	//	InputStream isFromFirstData = new ByteArrayInputStream(baosFactura.toByteArray());
+	//	Document document = JRXmlUtils.parse(isFromFirstData);
+		Document document = JRXmlUtils.parse(JRLoader.getLocationInputStream("src/ec/com/erp/facturacion/electronica/ride/Factura_V_2_1_0.xml"));
+		params.put(JRXPathQueryExecuterFactory.PARAMETER_XML_DATA_DOCUMENT, document);
+		params.put(JRXPathQueryExecuterFactory.XML_DATE_PATTERN, "yyyy-MM-dd");
+		params.put(JRXPathQueryExecuterFactory.XML_NUMBER_PATTERN, "#,##0.##");
+		params.put(JRXPathQueryExecuterFactory.XML_LOCALE, Locale.ENGLISH);
+		params.put(JRParameter.REPORT_LOCALE, Locale.US);
+		JasperFillManager.fillReportToFile("src/ec/com/erp/facturacion/electronica/ride/Factura_V_2_1_0.jasper", params);
+		String filePdf = JasperExportManager.exportReportToPdfFile("src/ec/com/erp/facturacion/electronica/ride/Factura_V_2_1_0.jrprint");
+		File file = new File(filePdf);
+		byte[] fileContent = Files.readAllBytes(file.toPath());
+		System.err.println("bytes : " + fileContent);
+	}
+    
+//	@Test
 	public void ejecutarFacturacionElectronicaFactura() throws SAXParseException, CertificateException, SAXException, IOException, JAXBException, InterruptedException {
 		
 		try {

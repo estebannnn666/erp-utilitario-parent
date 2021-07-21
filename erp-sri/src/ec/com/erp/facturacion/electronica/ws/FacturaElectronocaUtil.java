@@ -23,6 +23,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import ec.com.erp.cliente.common.constantes.ERPConstantes;
+import ec.com.erp.cliente.common.exception.ERPException;
 import ec.com.erp.cliente.mdl.dto.FacturaCabeceraDTO;
 import ec.com.erp.facturacion.electronica.enumeradores.AmbienteEnum;
 import ec.com.erp.facturacion.electronica.modelo.Factura;
@@ -36,8 +37,8 @@ import ec.com.erp.facturacion.electronica.ws.recepcion.RecepcionComprobantesOffl
 import ec.com.erp.facturacion.electronica.ws.recepcion.RespuestaSolicitud;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRParameter;
-//import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.query.JRXPathQueryExecuterFactory;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.JRXmlUtils;
@@ -45,20 +46,24 @@ import net.sf.jasperreports.engine.util.JRXmlUtils;
 public class FacturaElectronocaUtil {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static byte[] getReporte(ByteArrayOutputStream baosFactura) throws JRException {
-		Map params = new HashMap();
-//		InputStream isFromFirstData = new ByteArrayInputStream(baosFactura.toByteArray());
-//		Document document = JRXmlUtils.parse(isFromFirstData);
-		Document document = JRXmlUtils.parse(JRLoader.getLocationInputStream("src/main/java/ec/facturacion/electronica/ride/Factura_V_2_1_0.xml"));
-		params.put(JRXPathQueryExecuterFactory.PARAMETER_XML_DATA_DOCUMENT, document);
-		params.put(JRXPathQueryExecuterFactory.XML_DATE_PATTERN, "yyyy-MM-dd");
-		params.put(JRXPathQueryExecuterFactory.XML_NUMBER_PATTERN, "#,##0.##");
-		params.put(JRXPathQueryExecuterFactory.XML_LOCALE, Locale.ENGLISH);
-		params.put(JRParameter.REPORT_LOCALE, Locale.US);
-//		JasperFillManager.fillReportToFile("src/main/java/ec/facturacion/electronica/ride/Factura_V_2_1_0.jasper", params);
-		File jasper = new File("src/main/java/ec/facturacion/electronica/ride/Factura_V_2_1_0.jasper");
-        byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), params);
-        return bytes;
+	public static byte[] getReporte(ByteArrayOutputStream baosFactura) throws JRException, IOException {
+		try {
+			Map params = new HashMap();
+	//		InputStream isFromFirstData = new ByteArrayInputStream(baosFactura.toByteArray());
+	//		Document document = JRXmlUtils.parse(isFromFirstData);
+			Document document = JRXmlUtils.parse(JRLoader.getLocationInputStream("src/ec/com/erp/facturacion/electronica/ride/Factura_V_2_1_0.xml"));
+			params.put(JRXPathQueryExecuterFactory.PARAMETER_XML_DATA_DOCUMENT, document);
+			params.put(JRXPathQueryExecuterFactory.XML_DATE_PATTERN, "yyyy-MM-dd");
+			params.put(JRXPathQueryExecuterFactory.XML_NUMBER_PATTERN, "#,##0.##");
+			params.put(JRXPathQueryExecuterFactory.XML_LOCALE, Locale.ENGLISH);
+			params.put(JRParameter.REPORT_LOCALE, Locale.US);
+			JasperFillManager.fillReportToFile("src/ec/com/erp/facturacion/electronica/ride/Factura_V_2_1_0.jasper", params);
+			String filePdf = JasperExportManager.exportReportToPdfFile("src/ec/com/erp/facturacion/electronica/ride/Factura_V_2_1_0.jrprint");
+			File file = new File(filePdf);
+			return Files.readAllBytes(file.toPath());
+		}catch (Exception e) {
+			throw new ERPException("Error", e.getMessage()) ;
+		}
 	}
 	
 	public static byte[] ejecutarFacturacionElectronicaFactura(String rucFactElectronica, String secuenciaFactura, FacturaCabeceraDTO facturaCabeceraDTO) throws SAXParseException, CertificateException, SAXException, IOException, JAXBException, InterruptedException {
@@ -66,7 +71,7 @@ public class FacturaElectronocaUtil {
 			Factura factura = ConstruirFacturaUtil.crearFactura(rucFactElectronica, secuenciaFactura, facturaCabeceraDTO);
 			ByteArrayOutputStream baosFactura = (new XmlUtil()).convertirObjetoAXml(Factura.class, factura);
 			FirmaXadesBesUtil firmaXadesBesUtil;
-			if(rucFactElectronica.equals(ERPConstantes.RUC_PRINCIPAL)) {
+			if(rucFactElectronica.equals(ERPConstantes.TIPO_RUC_UNO)) {
 				firmaXadesBesUtil = new FirmaXadesBesUtil("src/ec/com/erp/facturacion/electronica/resources/EDUARDOHOMEROBENAVIDESVALENZUELA140721193429.p12",
 						obtenerPasswordDesdeArchivoFacturaPrincipal());
 			}else {
@@ -104,15 +109,13 @@ public class FacturaElectronocaUtil {
 			if (!respuestaComprobante.getAutorizaciones().getAutorizacion().isEmpty()) {
 				for (ec.com.erp.facturacion.electronica.ws.autorizacion.Mensaje mensaje : respuestaComprobante.getAutorizaciones()
 						.getAutorizacion().get(0).getMensajes().getMensaje()) {
-					System.out.println(mensaje.getIdentificador() + " " + mensaje.getInformacionAdicional());
+					throw new ERPException("Error", "Error al generar factura electronica"+mensaje.getIdentificador() + " " + mensaje.getInformacionAdicional()) ;
 				}
 			}
 			return baosFactura.toByteArray();
 		}catch (Exception e) {
-			e.getStackTrace();
-			System.out.println(e.getStackTrace());
+			throw new ERPException("Error", e.getMessage()) ;
 		}
-		return null;
 	}
 	
 	private static String obtenerPasswordDesdeArchivoFacturaPrincipal() throws IOException {
