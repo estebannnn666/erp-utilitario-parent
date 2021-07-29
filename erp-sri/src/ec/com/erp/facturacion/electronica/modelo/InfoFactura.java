@@ -18,7 +18,7 @@ import ec.com.erp.facturacion.electronica.enumeradores.TipoIdentificacionComprad
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "fechaEmision", "dirEstablecimiento", "obligadoContabilidad", "tipoIdentificacionComprador",
-		"razonSocialComprador", "identificacionComprador", "totalSinImpuestos", "totalDescuento", "totalConImpuestos",
+		"razonSocialComprador", "identificacionComprador", "direccionComprador", "totalSinImpuestos", "totalDescuento", "totalConImpuestos",
 		"propina", "importeTotal", "moneda", "pagos" })
 @XmlSeeAlso({ TotalImpuesto.class })
 public class InfoFactura implements Serializable {
@@ -45,6 +45,8 @@ public class InfoFactura implements Serializable {
 
 	@XmlElement
 	private String identificacionComprador;
+	
+	private String direccionComprador;
 
 	@XmlElement
 	private String totalSinImpuestos;
@@ -171,5 +173,13 @@ public class InfoFactura implements Serializable {
 
 	public void setPagos(List<Pago> pagos) {
 		this.pagos = pagos;
+	}
+
+	public String getDireccionComprador() {
+		return direccionComprador;
+	}
+
+	public void setDireccionComprador(String direccionComprador) {
+		this.direccionComprador = direccionComprador;
 	}
 }

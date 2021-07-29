@@ -236,7 +236,7 @@
 			</textField>
 			<textField>
 				<reportElement style="etiqueta-parrafo" x="382" y="149" width="168" height="20" uuid="230b4de5-5ab8-4520-86a6-d5410d6cf46f"/>
-				<textFieldExpression><![CDATA["1".equals($F{ambiente}) ? "PRODUCCIÓN" : "PRUEBAS"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["2".equals($F{ambiente}) ? "PRODUCCIÓN" : "PRUEBAS"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="etiqueta-parrafo" x="282" y="149" width="100" height="20" uuid="12573baf-036e-4aa2-8036-65a469cd16b8"/>
@@ -244,7 +244,7 @@
 			</staticText>
 			<textField>
 				<reportElement style="etiqueta-parrafo" x="382" y="169" width="168" height="20" uuid="7cd82aee-4625-4218-a531-e1270ebaf1c9"/>
-				<textFieldExpression><![CDATA["2".equals($F{ambiente}) ? "NORMAL" : "INDISPONIBILIDAD DEL SISTEMA"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["1".equals($F{ambiente}) ? "NORMAL" : "INDISPONIBILIDAD DEL SISTEMA"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="etiqueta-parrafo" x="282" y="169" width="100" height="20" uuid="9e9f9bbb-fc58-4d7a-b164-cf7bc2ed1fe2"/>

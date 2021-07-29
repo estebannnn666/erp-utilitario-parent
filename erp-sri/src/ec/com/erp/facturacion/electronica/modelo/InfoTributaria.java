@@ -19,7 +19,7 @@ import ec.com.erp.facturacion.electronica.util.Modulo11Util;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "ambiente", "tipoEmision", "razonSocial", "nombreComercial", "ruc", "claveAcceso", "codDoc",
-		"estab", "ptoEmi", "secuencial", "dirMatriz" })
+		"estab", "ptoEmi", "secuencial", "dirMatriz", "regimenMicroempresas", "agenteRetencion" })
 @XmlSeeAlso({ InfoTributaria.class, InfoFactura.class, Detalle.class })
 public class InfoTributaria implements Serializable {
 
@@ -57,6 +57,9 @@ public class InfoTributaria implements Serializable {
 
 	@XmlElement
 	private String dirMatriz;
+	
+	private String regimenMicroempresas;
+	private String agenteRetencion;
 
 	public AmbienteEnum getAmbiente() {
 		return ambiente;
@@ -176,5 +179,21 @@ public class InfoTributaria implements Serializable {
 
 	public void setDirMatriz(String dirMatriz) {
 		this.dirMatriz = dirMatriz;
+	}
+
+	public String getRegimenMicroempresas() {
+		return regimenMicroempresas;
+	}
+
+	public void setRegimenMicroempresas(String regimenMicroempresas) {
+		this.regimenMicroempresas = regimenMicroempresas;
+	}
+
+	public String getAgenteRetencion() {
+		return agenteRetencion;
+	}
+
+	public void setAgenteRetencion(String agenteRetencion) {
+		this.agenteRetencion = agenteRetencion;
 	}
 }

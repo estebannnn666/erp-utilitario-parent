@@ -1,6 +1,7 @@
 package ec.com.erp.facturacion.electronica.ws;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,7 +35,7 @@ public class ConstruirFacturaUtil {
 	
 	public static Factura crearFactura(String rucFactElectronica, String secuenciaFactura, FacturaCabeceraDTO facturaCabeceraDTO) {
 		Factura factura = new Factura();
-		factura.setVersion("2.1.0");
+		factura.setVersion("1.0.0");
 		factura.setId("comprobante");
 		factura.setInfoTributaria(crearInfoTributaria(rucFactElectronica, secuenciaFactura));
 		factura.setInfoFactura(crearInfoFactura(facturaCabeceraDTO));
@@ -44,57 +45,72 @@ public class ConstruirFacturaUtil {
 
 	private static List<Detalle> crearDetalles(Collection<FacturaDetalleDTO> facturaDetalleDTOCols) {
 		// Convertidor de decimales
-		DecimalFormat formatoDecimales = new DecimalFormat("#.##");
+		DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
+	    decimalSymbols.setDecimalSeparator('.');
+		DecimalFormat formatoDecimales = new DecimalFormat("#.##", decimalSymbols);
 		formatoDecimales.setMinimumFractionDigits(2);
 		// Agregar detalles
 		List<Detalle> detalles = new ArrayList<>();
 		facturaDetalleDTOCols.stream().forEach(detalleFactura ->{
-			Detalle detalle = new Detalle();
-			detalle.setCodigoPrincipal(detalleFactura.getCodigoBarras());
-			detalle.setCodigoAuxiliar(detalleFactura.getCodigoArticulo().toString());
-			detalle.setDescripcion(detalleFactura.getDescripcion());
-			detalle.setCantidad(detalleFactura.getCantidad().toString());
-			detalle.setPrecioUnitario(formatoDecimales.format(detalleFactura.getValorUnidad().doubleValue()));
-			detalle.setPrecioTotalSinImpuesto(formatoDecimales.format(detalleFactura.getSubTotal().doubleValue()));
-			detalle.setDescuento("0.00");
-			
-
-			List<DetAdicional> detallesAdicionales = new ArrayList<DetAdicional>();
-			DetAdicional detAdicional = new DetAdicional();
-			detallesAdicionales.add(detAdicional);
-			detAdicional.setNombre(detalleFactura.getArticuloUnidadManejoDTO().getTipoUnidadManejoCatalogoValorDTO().getNombreCatalogoValor());
-			detAdicional.setValor(detalleFactura.getArticuloUnidadManejoDTO().getValorUnidadManejo().toString());
-			detalle.setDetallesAdicionales(detallesAdicionales);
-
-			if(detalleFactura.getArticuloDTO().getTieneImpuesto()) {
+			if(detalleFactura.getCodigoArticulo() != null){
+				Detalle detalle = new Detalle();
+				detalle.setCodigoPrincipal(detalleFactura.getCodigoBarras());
+				detalle.setCodigoAuxiliar(detalleFactura.getCodigoArticulo().toString());
+				detalle.setDescripcion(detalleFactura.getDescripcion());
+				detalle.setCantidad(detalleFactura.getCantidad().toString());
+				detalle.setPrecioUnitario(formatoDecimales.format(detalleFactura.getValorUnidad().doubleValue()));
+				detalle.setPrecioTotalSinImpuesto(formatoDecimales.format(detalleFactura.getSubTotal().doubleValue()));
+				detalle.setDescuento("0.00");
+				
+				List<DetAdicional> detallesAdicionales = new ArrayList<>();
+				DetAdicional detAdicional = new DetAdicional();
+				detallesAdicionales.add(detAdicional);
+				detAdicional.setNombre(detalleFactura.getArticuloUnidadManejoDTO().getTipoUnidadManejoCatalogoValorDTO().getNombreCatalogoValor());
+				detAdicional.setValor(detalleFactura.getArticuloUnidadManejoDTO().getValorUnidadManejo().toString());
+				detalle.setDetallesAdicionales(detallesAdicionales);
+	
 				List<Impuesto> impuestos = new ArrayList<>();
 				Impuesto impuesto = new Impuesto();
-				impuestos.add(impuesto);
 				impuesto.setCodigo(CodigoImpuestoEnum.IVA);
-				impuesto.setCodigoPorcentaje(CodigoPorcentajeEnum.IVA_12);
-				impuesto.setTarifa(TarifaEnum.IVA_0);
 				impuesto.setBaseImponible(formatoDecimales.format(detalleFactura.getSubTotal()));
-				impuesto.setValor(formatoDecimales.format(detalleFactura.getSubTotal().doubleValue() * 0.12));
+				if(detalleFactura.getArticuloDTO().getTieneImpuesto()) {
+					impuesto.setCodigoPorcentaje(CodigoPorcentajeEnum.IVA_12);
+					impuesto.setTarifa(TarifaEnum.IVA_12);
+					impuesto.setValor(formatoDecimales.format(detalleFactura.getSubTotal().doubleValue() * 0.12));
+				}else{
+					impuesto.setCodigoPorcentaje(CodigoPorcentajeEnum.IVA_0);
+					impuesto.setTarifa(TarifaEnum.IVA_0);
+					impuesto.setValor("0.00");
+				}
+				impuestos.add(impuesto);
 				detalle.setImpuestos(impuestos);
+				detalles.add(detalle);
 			}
-			detalles.add(detalle);
 		});
-		
-
 		return detalles;
 	}
 
 	private static InfoFactura crearInfoFactura(FacturaCabeceraDTO facturaCabeceraDTO) {
-		DecimalFormat formatoDecimales = new DecimalFormat("#.##");
+		DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
+	    decimalSymbols.setDecimalSeparator('.');
+		DecimalFormat formatoDecimales = new DecimalFormat("#.##", decimalSymbols);
 		formatoDecimales.setMinimumFractionDigits(2);
 		InfoFactura infoFactura = new InfoFactura();
 		infoFactura.setFechaEmision((new SimpleDateFormat("dd/MM/YYYY")).format(facturaCabeceraDTO.getFechaDocumento()));
-		infoFactura.setDirEstablecimiento(FacturacionElectronicaEnum.RUCPRINCIPA.getDireccion());
+		infoFactura.setDirEstablecimiento(facturaCabeceraDTO.getDireccion());
 		infoFactura.setObligadoContabilidad(ObligadoContabilidadEnum.NO);
-		infoFactura.setTipoIdentificacionComprador(TipoIdentificacionCompradorEnum.RUC);
+		if(facturaCabeceraDTO.getRucDocumento().length() == 13){
+			infoFactura.setTipoIdentificacionComprador(TipoIdentificacionCompradorEnum.RUC);
+		}
+		if(facturaCabeceraDTO.getRucDocumento().length() == 10){
+			infoFactura.setTipoIdentificacionComprador(TipoIdentificacionCompradorEnum.CEDULA);
+		}
+		if(facturaCabeceraDTO.getRucDocumento().equals("9999999999")){
+			infoFactura.setTipoIdentificacionComprador(TipoIdentificacionCompradorEnum.CONSUMIDOR_FINAL);
+		}		
 		infoFactura.setRazonSocialComprador(facturaCabeceraDTO.getNombreClienteProveedor());
 		infoFactura.setIdentificacionComprador(facturaCabeceraDTO.getRucDocumento());
-		infoFactura.setTotalSinImpuestos(formatoDecimales.format(facturaCabeceraDTO.getTotalSinImpuestos().doubleValue()));
+		infoFactura.setTotalSinImpuestos(formatoDecimales.format(facturaCabeceraDTO.getSubTotal().doubleValue()));
 		infoFactura.setTotalDescuento(formatoDecimales.format(facturaCabeceraDTO.getDescuento().doubleValue()));
 		infoFactura.setTotalConImpuestos(crearTotalImpuestos(facturaCabeceraDTO));
 		infoFactura.setImporteTotal(formatoDecimales.format(facturaCabeceraDTO.getTotalCuenta().doubleValue()));
@@ -113,13 +129,24 @@ public class ConstruirFacturaUtil {
 	}
 
 	private static List<TotalImpuesto> crearTotalImpuestos(FacturaCabeceraDTO facturaCabeceraDTO) {
-		DecimalFormat formatoDecimales = new DecimalFormat("#.##");
+		DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
+	    decimalSymbols.setDecimalSeparator('.');
+		DecimalFormat formatoDecimales = new DecimalFormat("#.##", decimalSymbols);
 		formatoDecimales.setMinimumFractionDigits(2);
 		List<TotalImpuesto> totalImpuestos = new ArrayList<>();
+		
+		TotalImpuesto totalImpuestoZero = new TotalImpuesto();
+		totalImpuestoZero.setCodigo(CodigoImpuestoEnum.IVA);
+		totalImpuestoZero.setCodigoPorcentaje(CodigoPorcentajeEnum.IVA_0);
+		totalImpuestoZero.setTarifa(TarifaEnum.IVA_0);
+		totalImpuestoZero.setBaseImponible(formatoDecimales.format(facturaCabeceraDTO.getTotalSinImpuestos().doubleValue()));
+		totalImpuestoZero.setValor("0.00");
+		totalImpuestos.add(totalImpuestoZero);
+		
 		TotalImpuesto totalImpuesto = new TotalImpuesto();
 		totalImpuesto.setCodigo(CodigoImpuestoEnum.IVA);
 		totalImpuesto.setCodigoPorcentaje(CodigoPorcentajeEnum.IVA_12);
-		totalImpuesto.setTarifa(TarifaEnum.IVA_0);
+		totalImpuesto.setTarifa(TarifaEnum.IVA_12);
 		totalImpuesto.setBaseImponible(formatoDecimales.format(facturaCabeceraDTO.getTotalImpuestos().doubleValue()));
 		totalImpuesto.setValor(formatoDecimales.format(facturaCabeceraDTO.getTotalIva().doubleValue()));
 		totalImpuestos.add(totalImpuesto);
