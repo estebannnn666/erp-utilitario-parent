@@ -1,23 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<autorizacion>
+<?xml version="1.0" encoding="UTF-8"?><autorizacion>
   <estado>AUTORIZADO</estado>
-  <numeroAutorizacion>2707202101100363526300110010010000000090000000911</numeroAutorizacion>
-  <fechaAutorizacion class="org.apache.xerces.jaxp.datatype.XMLGregorianCalendarImpl">
-    <orig__year>2021</orig__year>
-    <orig__month>7</orig__month>
-    <orig__day>27</orig__day>
-    <orig__hour>17</orig__hour>
-    <orig__minute>10</orig__minute>
-    <orig__second>21</orig__second>
-    <orig__timezone>-300</orig__timezone>
-    <year>2021</year>
-    <month>7</month>
-    <day>27</day>
-    <timezone>-300</timezone>
-    <hour>17</hour>
-    <minute>10</minute>
-    <second>21</second>
-  </fechaAutorizacion>
+  <numeroAutorizacion>3007202101100363526300110010010000000120000001213</numeroAutorizacion>
+  <fechaAutorizacion>2021-07-30T14:26:12-05:00</fechaAutorizacion>
   <ambiente>PRUEBAS</ambiente>
   <comprobante><![CDATA[<?xml version="1.0" encoding="UTF-8"?><factura id="comprobante" version="1.0.0">
     <infoTributaria>
@@ -26,56 +10,78 @@
         <razonSocial>BENAVIDES BLANCO JOHANA PAMELA</razonSocial>
         <nombreComercial>PROBERSA</nombreComercial>
         <ruc>1003635263001</ruc>
-        <claveAcceso>2707202101100363526300110010010000000090000000911</claveAcceso>
+        <claveAcceso>3007202101100363526300110010010000000120000001213</claveAcceso>
         <codDoc>01</codDoc>
         <estab>001</estab>
         <ptoEmi>001</ptoEmi>
-        <secuencial>000000009</secuencial>
+        <secuencial>000000012</secuencial>
         <dirMatriz>El Olivo alto SN y SN(a una cuadra de la sede social del barrio)</dirMatriz>
     </infoTributaria>
     <infoFactura>
-        <fechaEmision>27/07/2021</fechaEmision>
-        <dirEstablecimiento>AV 13 DE ABRIL 69 CAÑAR</dirEstablecimiento>
+        <fechaEmision>30/07/2021</fechaEmision>
+        <dirEstablecimiento>El Olivo alto SN y SN(a una cuadra de la sede social del barrio)</dirEstablecimiento>
         <obligadoContabilidad>NO</obligadoContabilidad>
         <tipoIdentificacionComprador>05</tipoIdentificacionComprador>
         <razonSocialComprador>GUDIÑO BARAHONA HENRY ESTEBAN</razonSocialComprador>
         <identificacionComprador>1002966404</identificacionComprador>
-        <totalSinImpuestos>42.00</totalSinImpuestos>
-        <totalDescuento>8.00</totalDescuento>
+        <direccionComprador>AV 13 DE ABRIL 69 CAÑAR</direccionComprador>
+        <totalSinImpuestos>45.00</totalSinImpuestos>
+        <totalDescuento>3.50</totalDescuento>
         <totalConImpuestos>
             <totalImpuesto>
                 <codigo>2</codigo>
                 <codigoPorcentaje>0</codigoPorcentaje>
-                <baseImponible>0.00</baseImponible>
+                <baseImponible>23.00</baseImponible>
                 <tarifa>0</tarifa>
                 <valor>0.00</valor>
             </totalImpuesto>
             <totalImpuesto>
                 <codigo>2</codigo>
                 <codigoPorcentaje>2</codigoPorcentaje>
-                <baseImponible>42.00</baseImponible>
+                <baseImponible>22.00</baseImponible>
                 <tarifa>12</tarifa>
-                <valor>5.04</valor>
+                <valor>2.64</valor>
             </totalImpuesto>
         </totalConImpuestos>
-        <importeTotal>47.04</importeTotal>
+        <importeTotal>47.64</importeTotal>
         <moneda>DOLAR</moneda>
         <pagos>
             <pago>
                 <formaPago>01</formaPago>
-                <total>47.04</total>
+                <total>47.64</total>
             </pago>
         </pagos>
     </infoFactura>
     <detalles>
         <detalle>
+            <codigoPrincipal>1100252525</codigoPrincipal>
+            <codigoAuxiliar>1</codigoAuxiliar>
+            <descripcion>ARTICULO UNO</descripcion>
+            <cantidad>10</cantidad>
+            <precioUnitario>2.30</precioUnitario>
+            <descuento>2.00</descuento>
+            <precioTotalSinImpuesto>23.00</precioTotalSinImpuesto>
+            <detallesAdicionales>
+                <detAdicional nombre="UNIDAD" valor="1"/>
+            </detallesAdicionales>
+            <impuestos>
+                <impuesto>
+                    <codigo>2</codigo>
+                    <codigoPorcentaje>0</codigoPorcentaje>
+                    <tarifa>0</tarifa>
+                    <baseImponible>23.00</baseImponible>
+                    <valor>0.00</valor>
+                </impuesto>
+            </impuestos>
+        </detalle>
+        <detalle>
             <codigoPrincipal>7862107350470</codigoPrincipal>
             <codigoAuxiliar>2</codigoAuxiliar>
             <descripcion>ALCOHOL</descripcion>
-            <cantidad>20</cantidad>
-            <precioUnitario>2.10</precioUnitario>
-            <descuento>0.00</descuento>
-            <precioTotalSinImpuesto>42.00</precioTotalSinImpuesto>
+            <cantidad>5</cantidad>
+            <precioUnitario>2.40</precioUnitario>
+            <descuento>0.50</descuento>
+            <precioTotalSinImpuesto>12.00</precioTotalSinImpuesto>
             <detallesAdicionales>
                 <detAdicional nombre="UNIDAD" valor="1"/>
             </detallesAdicionales>
@@ -84,40 +90,61 @@
                     <codigo>2</codigo>
                     <codigoPorcentaje>2</codigoPorcentaje>
                     <tarifa>12</tarifa>
-                    <baseImponible>42.00</baseImponible>
-                    <valor>5.04</valor>
+                    <baseImponible>12.00</baseImponible>
+                    <valor>1.44</valor>
+                </impuesto>
+            </impuestos>
+        </detalle>
+        <detalle>
+            <codigoPrincipal>7861024621465</codigoPrincipal>
+            <codigoAuxiliar>3</codigoAuxiliar>
+            <descripcion>POWERADE MANZANA CLEAR</descripcion>
+            <cantidad>10</cantidad>
+            <precioUnitario>1.00</precioUnitario>
+            <descuento>1.00</descuento>
+            <precioTotalSinImpuesto>10.00</precioTotalSinImpuesto>
+            <detallesAdicionales>
+                <detAdicional nombre="UNIDAD" valor="1"/>
+            </detallesAdicionales>
+            <impuestos>
+                <impuesto>
+                    <codigo>2</codigo>
+                    <codigoPorcentaje>2</codigoPorcentaje>
+                    <tarifa>12</tarifa>
+                    <baseImponible>10.00</baseImponible>
+                    <valor>1.20</valor>
                 </impuesto>
             </impuestos>
         </detalle>
     </detalles>
-<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:etsi="http://uri.etsi.org/01903/v1.3.2#" Id="Signature232823">
-<ds:SignedInfo Id="Signature-SignedInfo38075">
+<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:etsi="http://uri.etsi.org/01903/v1.3.2#" Id="Signature971997">
+<ds:SignedInfo Id="Signature-SignedInfo556598">
 <ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
 <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
-<ds:Reference Id="SignedPropertiesID485721" Type="http://uri.etsi.org/01903#SignedProperties" URI="#Signature232823-SignedProperties803502">
+<ds:Reference Id="SignedPropertiesID814145" Type="http://uri.etsi.org/01903#SignedProperties" URI="#Signature971997-SignedProperties295349">
 <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-<ds:DigestValue>jZtZKF1gopoRWAUrfAH8n0AlFRg=</ds:DigestValue>
+<ds:DigestValue>JaDSgaKv8FcvhY/fvIu22j6ai1Y=</ds:DigestValue>
 </ds:Reference>
-<ds:Reference URI="#Certificate143775">
+<ds:Reference URI="#Certificate1739234">
 <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-<ds:DigestValue>LO1jQBIrQKXpvLcxaaxP1+sntOw=</ds:DigestValue>
+<ds:DigestValue>bxn913vTgV6rUWXn9hV25RVRIpY=</ds:DigestValue>
 </ds:Reference>
-<ds:Reference Id="Reference-ID-694806" URI="#comprobante">
+<ds:Reference Id="Reference-ID-215079" URI="#comprobante">
 <ds:Transforms>
 <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
 </ds:Transforms>
 <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-<ds:DigestValue>9YDwPKxuNeHR1u513XjwSBJr398=</ds:DigestValue>
+<ds:DigestValue>mwz+a3GOvPCDzNqn8aB+Yu7mVLw=</ds:DigestValue>
 </ds:Reference>
 </ds:SignedInfo>
-<ds:SignatureValue Id="SignatureValue385508">
-feYQf+JL/snqPLVj8tBdDE4rxpGPIQVqCoHXovXszCar6tB7JRTZ9fw27SrZqFOFR3qS+79Ep6H6
-GottTXgedN/lAsiDsAkXIfnb+erJITKoqFYVargHcI1jHDwCA/igxxTCfIRJ9uZsUz4qZ2P83uGj
-wWH691Vw42gE8Dg3wIZNX1+jNzcAvTL+usYIVJBjWwEcMxI7aHqCbizaXyMLUi0O0bRidWqL5jLM
-f+8/jgtjL7ELlYDf9pgR2JlVSPAO+Qr/P8V56vXOPRSXKsH4c3BQr42VBWwTctJ6cI32mPWA0070
-pPx632XE0xdHp6mNhv9CSMsAEhCiRyrkE1wEuw==
+<ds:SignatureValue Id="SignatureValue118">
+JqEq/z8pn/88M5Z/1uhXmpK1qcCeFng3w9bpCEPW0zmqTq64s7b1oH8zlq/RuEuo9qlY9l0nHuii
+JYiStJTgy7r5VmOPFN5RBS4Ng2Dxm03G5QD4b+3EjKY1Inxhi/iabfWcH8P43J5Piq7ln9aAKW1r
+B4YhK3k8PamCvUBSKF1/vfgMonqhdW2zL3MM9BPfE/B2C1tL8nEv2iiSix/M7Jz11X8QsHSlLWP+
+NVZxdvGXOl3oYGZvgZc/61uCwY3rDEZ0zsiiVgQCcdMVgv4FvUfF7nI1glAcso+lo7dvkKvQPsfR
+emqmPYwS7DNo+39zxK5dvkPt0J5phy+MhawbCQ==
 </ds:SignatureValue>
-<ds:KeyInfo Id="Certificate143775">
+<ds:KeyInfo Id="Certificate1739234">
 <ds:X509Data>
 <ds:X509Certificate>
 MIILyDCCCbCgAwIBAgIEEsEaxjANBgkqhkiG9w0BAQsFADCBmTELMAkGA1UEBhMCRUMxHTAbBgNV
@@ -188,8 +215,7 @@ PKYyFsm/w0tjw/I6uQgGQwl3GFNbQWis7dpMTQ==
 </ds:RSAKeyValue>
 </ds:KeyValue>
 </ds:KeyInfo>
-<ds:Object Id="Signature232823-Object948131"><etsi:QualifyingProperties Target="#Signature232823"><etsi:SignedProperties Id="Signature232823-SignedProperties803502"><etsi:SignedSignatureProperties><etsi:SigningTime>2021-07-27T17:10:01-05:00</etsi:SigningTime><etsi:SigningCertificate><etsi:Cert><etsi:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>TMqXsFGyV1uByPXV9e6GbHhOGOM=</ds:DigestValue></etsi:CertDigest><etsi:IssuerSerial><ds:X509IssuerName>CN=AUTORIDAD DE CERTIFICACION SUBCA-2 SECURITY DATA,OU=ENTIDAD DE CERTIFICACION DE INFORMACION,O=SECURITY DATA S.A. 2,C=EC</ds:X509IssuerName><ds:X509SerialNumber>314645190</ds:X509SerialNumber></etsi:IssuerSerial></etsi:Cert></etsi:SigningCertificate></etsi:SignedSignatureProperties><etsi:SignedDataObjectProperties><etsi:DataObjectFormat ObjectReference="#Reference-ID-694806"><etsi:Description>contenido comprobante</etsi:Description><etsi:MimeType>text/xml</etsi:MimeType></etsi:DataObjectFormat></etsi:SignedDataObjectProperties></etsi:SignedProperties></etsi:QualifyingProperties></ds:Object></ds:Signature></factura>]]>
-</comprobante>
+<ds:Object Id="Signature971997-Object579844"><etsi:QualifyingProperties Target="#Signature971997"><etsi:SignedProperties Id="Signature971997-SignedProperties295349"><etsi:SignedSignatureProperties><etsi:SigningTime>2021-07-30T14:25:43-05:00</etsi:SigningTime><etsi:SigningCertificate><etsi:Cert><etsi:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>TMqXsFGyV1uByPXV9e6GbHhOGOM=</ds:DigestValue></etsi:CertDigest><etsi:IssuerSerial><ds:X509IssuerName>CN=AUTORIDAD DE CERTIFICACION SUBCA-2 SECURITY DATA,OU=ENTIDAD DE CERTIFICACION DE INFORMACION,O=SECURITY DATA S.A. 2,C=EC</ds:X509IssuerName><ds:X509SerialNumber>314645190</ds:X509SerialNumber></etsi:IssuerSerial></etsi:Cert></etsi:SigningCertificate></etsi:SignedSignatureProperties><etsi:SignedDataObjectProperties><etsi:DataObjectFormat ObjectReference="#Reference-ID-215079"><etsi:Description>contenido comprobante</etsi:Description><etsi:MimeType>text/xml</etsi:MimeType></etsi:DataObjectFormat></etsi:SignedDataObjectProperties></etsi:SignedProperties></etsi:QualifyingProperties></ds:Object></ds:Signature></factura>]]></comprobante>
   <mensajes>
     <mensaje/>
   </mensajes>

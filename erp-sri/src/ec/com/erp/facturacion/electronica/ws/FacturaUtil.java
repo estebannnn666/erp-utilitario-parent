@@ -84,7 +84,7 @@ public class FacturaUtil {
 	}
 
 	private List<Detalle> crearDetalles() {
-		List<Detalle> detalles = new ArrayList<Detalle>();
+		List<Detalle> detalles = new ArrayList<>();
 		Detalle detalle = new Detalle();
 		detalle.setCodigoPrincipal("831520202");
 		detalle.setCodigoAuxiliar("1");
@@ -95,14 +95,14 @@ public class FacturaUtil {
 		detalle.setDescuento("0.00");
 		detalles.add(detalle);
 
-		List<DetAdicional> detallesAdicionales = new ArrayList<DetAdicional>();
+		List<DetAdicional> detallesAdicionales = new ArrayList<>();
 		DetAdicional detAdicional = new DetAdicional();
 		detallesAdicionales.add(detAdicional);
 		detAdicional.setNombre("nombre");
 		detAdicional.setValor("valor");
 		detalle.setDetallesAdicionales(detallesAdicionales);
 
-		List<Impuesto> impuestos = new ArrayList<Impuesto>();
+		List<Impuesto> impuestos = new ArrayList<>();
 		Impuesto impuesto = new Impuesto();
 		impuestos.add(impuesto);
 		impuesto.setCodigo(CodigoImpuestoEnum.IVA);
@@ -126,6 +126,7 @@ public class FacturaUtil {
 		infoFactura.setTotalSinImpuestos("1.00");
 		infoFactura.setTotalDescuento("0.00");
 		infoFactura.setTotalConImpuestos(crearTotalImpuestos());
+		infoFactura.setPropina("0.00");
 		infoFactura.setImporteTotal("1.14");
 		infoFactura.setMoneda(MonedaEnum.DOLAR);
 		infoFactura.setPagos(crearPagos());

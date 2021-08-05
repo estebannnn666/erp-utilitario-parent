@@ -60,7 +60,7 @@ public class ConstruirFacturaUtil {
 				detalle.setCantidad(detalleFactura.getCantidad().toString());
 				detalle.setPrecioUnitario(formatoDecimales.format(detalleFactura.getValorUnidad().doubleValue()));
 				detalle.setPrecioTotalSinImpuesto(formatoDecimales.format(detalleFactura.getSubTotal().doubleValue()));
-				detalle.setDescuento("0.00");
+				detalle.setDescuento(detalleFactura.getDescuento() == null ? "0.00" : formatoDecimales.format(detalleFactura.getDescuento().doubleValue()));
 				
 				List<DetAdicional> detallesAdicionales = new ArrayList<>();
 				DetAdicional detAdicional = new DetAdicional();
@@ -97,7 +97,7 @@ public class ConstruirFacturaUtil {
 		formatoDecimales.setMinimumFractionDigits(2);
 		InfoFactura infoFactura = new InfoFactura();
 		infoFactura.setFechaEmision((new SimpleDateFormat("dd/MM/YYYY")).format(facturaCabeceraDTO.getFechaDocumento()));
-		infoFactura.setDirEstablecimiento(facturaCabeceraDTO.getDireccion());
+		infoFactura.setDirEstablecimiento(FacturacionElectronicaEnum.RUCPRINCIPA.getDireccion());
 		infoFactura.setObligadoContabilidad(ObligadoContabilidadEnum.NO);
 		if(facturaCabeceraDTO.getRucDocumento().length() == 13){
 			infoFactura.setTipoIdentificacionComprador(TipoIdentificacionCompradorEnum.RUC);
@@ -110,11 +110,13 @@ public class ConstruirFacturaUtil {
 		}		
 		infoFactura.setRazonSocialComprador(facturaCabeceraDTO.getNombreClienteProveedor());
 		infoFactura.setIdentificacionComprador(facturaCabeceraDTO.getRucDocumento());
+		infoFactura.setDireccionComprador(facturaCabeceraDTO.getDireccion());
 		infoFactura.setTotalSinImpuestos(formatoDecimales.format(facturaCabeceraDTO.getSubTotal().doubleValue()));
 		infoFactura.setTotalDescuento(formatoDecimales.format(facturaCabeceraDTO.getDescuento().doubleValue()));
 		infoFactura.setTotalConImpuestos(crearTotalImpuestos(facturaCabeceraDTO));
 		infoFactura.setImporteTotal(formatoDecimales.format(facturaCabeceraDTO.getTotalCuenta().doubleValue()));
 		infoFactura.setMoneda(MonedaEnum.DOLAR);
+		infoFactura.setPropina("0.00");
 		infoFactura.setPagos(crearPagos(formatoDecimales.format(facturaCabeceraDTO.getTotalCuenta().doubleValue())));
 		return infoFactura;
 	}

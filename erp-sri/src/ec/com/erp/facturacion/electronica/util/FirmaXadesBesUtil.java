@@ -159,7 +159,7 @@ public class FirmaXadesBesUtil {
 		String alias = null;
 
 		try {
-			Enumeration nombres = keyStore.aliases();
+			Enumeration<String> nombres = keyStore.aliases();
 			while (nombres.hasMoreElements()) {
 				String tmpAlias = (String) nombres.nextElement();
 				if (keyStore.isKeyEntry(tmpAlias)) {

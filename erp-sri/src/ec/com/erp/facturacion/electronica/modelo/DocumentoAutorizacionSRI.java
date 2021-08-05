@@ -2,12 +2,12 @@
 package ec.com.erp.facturacion.electronica.modelo;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -62,8 +62,7 @@ public class DocumentoAutorizacionSRI {
 
     protected String estado;
     protected String numeroAutorizacion;
-    @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar fechaAutorizacion;
+    protected GregorianCalendar fechaAutorizacion;
     protected String ambiente;
     protected String comprobante;
     protected DocumentoAutorizacionSRI.Mensajes mensajes;
@@ -124,7 +123,7 @@ public class DocumentoAutorizacionSRI {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getFechaAutorizacion() {
+    public GregorianCalendar getFechaAutorizacion() {
         return fechaAutorizacion;
     }
 
@@ -136,7 +135,7 @@ public class DocumentoAutorizacionSRI {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setFechaAutorizacion(XMLGregorianCalendar value) {
+    public void setFechaAutorizacion(GregorianCalendar value) {
         this.fechaAutorizacion = value;
     }
 

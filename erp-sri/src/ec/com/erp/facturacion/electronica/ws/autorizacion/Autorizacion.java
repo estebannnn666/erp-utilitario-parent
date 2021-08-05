@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -58,8 +57,7 @@ public class Autorizacion {
 
     protected String estado;
     protected String numeroAutorizacion;
-    @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar fechaAutorizacion;
+    protected String fechaAutorizacion;
     protected String ambiente;
     protected String comprobante;
     protected Autorizacion.Mensajes mensajes;
@@ -120,7 +118,7 @@ public class Autorizacion {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getFechaAutorizacion() {
+    public String getFechaAutorizacion() {
         return fechaAutorizacion;
     }
 
@@ -132,7 +130,7 @@ public class Autorizacion {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setFechaAutorizacion(XMLGregorianCalendar value) {
+    public void setFechaAutorizacion(String value) {
         this.fechaAutorizacion = value;
     }
 

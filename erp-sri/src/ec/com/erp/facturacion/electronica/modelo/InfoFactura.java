@@ -46,6 +46,7 @@ public class InfoFactura implements Serializable {
 	@XmlElement
 	private String identificacionComprador;
 	
+	@XmlElement
 	private String direccionComprador;
 
 	@XmlElement

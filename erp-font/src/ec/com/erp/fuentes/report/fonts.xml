@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fontFamilies>
+	<fontFamily name="Monospaced">
+		<normal>ec/com/erp/fuentes/report/monospace/Monospace.ttf</normal>
+        <bold>ec/com/erp/fuentes/report/monospace/MonospaceBold.ttf</bold>
+        <italic>ec/com/erp/fuentes/report/monospace/MonospaceOblique.ttf</italic>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">'DejaVu Sans Mono', 'Courier New', Courier, monospace</export>
+		</exportFonts>
+	</fontFamily>
+</fontFamilies>

@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.cert.CertificateException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,9 +91,10 @@ import net.sf.jasperreports.engine.util.JRXmlUtils;
 public class FacturaWS {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@Test
+//	@Test
 	public void ejecutaImpresionRIDE() throws JRException, IOException, TransformerException, SAXParseException, SAXException, JAXBException, ERPException, ClassNotFoundException {
 		try{
+			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
 			Map params = new HashMap();
 			// InputStream isFromFirstData = new
 			// ByteArrayInputStream(baosFactura.toByteArray());
@@ -115,7 +117,7 @@ public class FacturaWS {
 //			params.put(JRXPathQueryExecuterFactory.XML_NUMBER_PATTERN, "#,##0.##");
 //			params.put(JRXPathQueryExecuterFactory.XML_LOCALE, Locale.ENGLISH);
 			JRDataSource dataSource = new JRBeanCollectionDataSource(getDetallesAdiciones(facturaSRI));
-			params = obtenerMapaParametrosReportes(obtenerParametrosInfoTriobutaria(facturaSRI.getInfoTributaria(), autorizacion.getNumeroAutorizacion(), ""), obtenerInfoFactura(facturaSRI.getInfoFactura()));
+			params = obtenerMapaParametrosReportes(obtenerParametrosInfoTriobutaria(facturaSRI.getInfoTributaria(), autorizacion.getNumeroAutorizacion(), formatoFecha.format(autorizacion.getFechaAutorizacion().getTime())), obtenerInfoFactura(facturaSRI.getInfoFactura()));
 			params.put(JRParameter.REPORT_LOCALE, Locale.US);
 			JasperFillManager.fillReportToFile("C:\\ErpLibreries\\resources\\factura.jasper", params, dataSource);
 			String filePdf = JasperExportManager.exportReportToPdfFile("C:\\ErpLibreries\\resources\\factura.jrprint");
@@ -127,7 +129,7 @@ public class FacturaWS {
 		}
 	}
 
-	// @Test
+	@Test
 	public void ejecutarFacturacionElectronicaFactura() throws SAXParseException, CertificateException, SAXException,
 			IOException, JAXBException, InterruptedException {
 
@@ -181,7 +183,9 @@ public class FacturaWS {
 			System.out.println("Bytes: " + bute);
 		} catch (Exception e) {
 			e.getStackTrace();
-			System.out.println(e.getStackTrace());
+			System.out.println(e.getCause());
+			System.out.println(e.getMessage());
+			System.out.println(e.getLocalizedMessage());
 		}
 	}
 
@@ -242,7 +246,7 @@ public class FacturaWS {
 		param.put("RAZON_SOCIAL", infoTributaria.getRazonSocial());
 		param.put("DIR_MATRIZ", infoTributaria.getDirMatriz());
 		try {
-			param.put("LOGO", new FileInputStream("C:\\ErpLibreries\\imagenes\\logo.jpeg"));
+			param.put("LOGO", new FileInputStream("C:\\ErpLibreries\\imagenes\\probersa.jpeg"));
 		} catch (FileNotFoundException ex) {
 			try {
 				param.put("LOGO", new FileInputStream("C:\\ErpLibreries\\imagenes\\logo.jpeg"));
@@ -275,10 +279,10 @@ public class FacturaWS {
 	}
 
 	private String obtenerTipoEmision(InfoTributaria infoTributaria) {
-		if (infoTributaria.getTipoEmision().equals("2")) {
+		if (infoTributaria.getTipoEmision().compareTo(TipoEmisionEnum.INDISPONIBILIDAD) == 0) {
 			return TipoEmisionEnum.INDISPONIBILIDAD.getCodigo();
 		}
-		if (infoTributaria.getTipoEmision().equals("1")) {
+		if (infoTributaria.getTipoEmision().compareTo(TipoEmisionEnum.NORMAL) == 0) {
 			return TipoEmisionEnum.NORMAL.getCodigo();
 		}
 		return null;
