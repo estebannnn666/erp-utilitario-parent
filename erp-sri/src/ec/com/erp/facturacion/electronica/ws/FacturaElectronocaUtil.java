@@ -20,6 +20,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.cert.CertificateException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,11 +93,10 @@ import net.sf.jasperreports.engine.util.JRXmlUtils;
 
 public class FacturaElectronocaUtil {
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static byte[] getReporte(byte[] xmlFactura) throws JRException, IOException {
+	public static byte[] imprimirRideFactura(byte[] xmlFactura) throws JRException, IOException {
 		try {
 			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
-			Map params = new HashMap<>();
+			Map<String, Object> params = new ConcurrentHashMap<>();
 			InputStream isFromFirstData = new ByteArrayInputStream(xmlFactura);
 			Document document = JRXmlUtils.parse(isFromFirstData);
 			TransformerFactory tf = TransformerFactory.newInstance();
@@ -120,13 +121,42 @@ public class FacturaElectronocaUtil {
 		}
 	}
 	
-	public static Map<String, Object> ejecutarFacturacionElectronicaFactura(String rucFactElectronica, String secuenciaFactura, FacturaCabeceraDTO facturaCabeceraDTO) throws SAXParseException, CertificateException, SAXException, IOException, JAXBException, InterruptedException {
+	public static byte[] imprimirFacturaFormato(byte[] xmlFactura) throws JRException, IOException {
+		try {
+			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
+			Map<String, Object> params = new ConcurrentHashMap<>();
+			InputStream isFromFirstData = new ByteArrayInputStream(xmlFactura);
+			Document document = JRXmlUtils.parse(isFromFirstData);
+			TransformerFactory tf = TransformerFactory.newInstance();
+			Transformer t = tf.newTransformer();
+			StringWriter sw = new StringWriter();
+			t.transform(new DOMSource(document), new StreamResult(sw));
+			String xml = sw.toString();
+			DocumentoAutorizacionSRI autorizacion = xmlAObjectAutorizacion(xml);
+			Factura facturaSRI = xmlAObjectFactura(autorizacion.getComprobante());
+			JRDataSource dataSource = new JRBeanCollectionDataSource(getDetallesAdiciones(facturaSRI));
+			params = obtenerMapaParametrosReportes(obtenerParametrosInfoTriobutaria(facturaSRI.getInfoTributaria(), autorizacion.getNumeroAutorizacion(), formatoFecha.format(autorizacion.getFechaAutorizacion().getTime())), obtenerInfoFactura(facturaSRI.getInfoFactura()));
+			obtenerTotalesFactura(params, facturaSRI);
+			params.put(JRParameter.REPORT_LOCALE, Locale.US);
+			JasperFillManager.fillReportToFile("C:\\ErpLibreries\\resources\\factura_probersa.jasper", params, dataSource);
+			String filePdf = JasperExportManager.exportReportToPdfFile("C:\\ErpLibreries\\resources\\factura_probersa.jrprint");
+			File file = new File(filePdf);
+			byte[] fileContent = Files.readAllBytes(file.toPath());
+			return fileContent;
+		}catch (JRException e) {
+			throw new ERPException("Error", e.getMessage()) ;
+		}catch (Exception e) {
+			throw new ERPException("Error", e.getMessage()) ;
+		}
+	}
+	
+	public static Map<String, Object> ejecutarFacturacionElectronicaFactura(FacturaCabeceraDTO facturaCabeceraDTO) throws SAXParseException, CertificateException, SAXException, IOException, JAXBException, InterruptedException {
 		try {
 			Map<String, Object> datosFactura = new ConcurrentHashMap<>();
-			Factura factura = ConstruirFacturaUtil.crearFactura(rucFactElectronica, secuenciaFactura, facturaCabeceraDTO);
+			Factura factura = ConstruirFacturaUtil.crearFactura(facturaCabeceraDTO);
 			ByteArrayOutputStream baosFactura = (new XmlUtil()).convertirObjetoAXml(Factura.class, factura);
 			FirmaXadesBesUtil firmaXadesBesUtil;
-			if(rucFactElectronica.equals(ERPConstantes.TIPO_RUC_UNO)) {
+			if(facturaCabeceraDTO.getTipoRuc().equals(ERPConstantes.TIPO_RUC_UNO)) {
 				firmaXadesBesUtil = new FirmaXadesBesUtil("C:\\ErpLibreries\\facturacion\\EDUARDOHOMEROBENAVIDESVALENZUELA140721193429.p12",
 						obtenerPasswordDesdeArchivoFacturaPrincipal());
 			}else {
@@ -413,5 +443,24 @@ public class FacturaElectronocaUtil {
         	totalesComprobante.add(new TotalesComprobante("VALOR TOTAL", BigDecimal.valueOf(Double.parseDouble(facturaSRI.getInfoFactura().getImporteTotal())), false));
         } 
         return totalesComprobante;
+    }
+	
+	private static void obtenerTotalesFactura(Map<String, Object> param, Factura facturaSRI) throws SQLException, ClassNotFoundException {
+        TotalComprobante tc = getTotales(facturaSRI.getInfoFactura());
+        // Convertidor de decimales
+ 		DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
+ 	    decimalSymbols.setDecimalSeparator('.');
+ 		DecimalFormat formatoDecimales = new DecimalFormat("#.##", decimalSymbols);
+ 		formatoDecimales.setMinimumFractionDigits(2);
+        for(IvaDiferenteCeroReporte iva : tc.getIvaDistintoCero()) {
+        	param.put("TARIFAIVA", formatoDecimales.format(iva.getSubtotal()));
+        }
+        for (IvaDiferenteCeroReporte iva : tc.getIvaDistintoCero()) {
+        	param.put("VALORIVA", formatoDecimales.format(iva.getValor()));
+        }
+        param.put("TARIFACERO", formatoDecimales.format(tc.getSubtotal0()));
+        param.put("SUBTOTAL", facturaSRI.getInfoFactura().getTotalSinImpuestos());
+        param.put("DESCUENTO", facturaSRI.getInfoFactura().getTotalDescuento());
+        param.put("TOTAL", facturaSRI.getInfoFactura().getImporteTotal());
     }
 }

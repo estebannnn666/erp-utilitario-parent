@@ -20,6 +20,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.cert.CertificateException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,7 +93,7 @@ import net.sf.jasperreports.engine.util.JRXmlUtils;
 public class FacturaWS {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-//	@Test
+	@Test
 	public void ejecutaImpresionRIDE() throws JRException, IOException, TransformerException, SAXParseException, SAXException, JAXBException, ERPException, ClassNotFoundException {
 		try{
 			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
@@ -118,9 +120,11 @@ public class FacturaWS {
 //			params.put(JRXPathQueryExecuterFactory.XML_LOCALE, Locale.ENGLISH);
 			JRDataSource dataSource = new JRBeanCollectionDataSource(getDetallesAdiciones(facturaSRI));
 			params = obtenerMapaParametrosReportes(obtenerParametrosInfoTriobutaria(facturaSRI.getInfoTributaria(), autorizacion.getNumeroAutorizacion(), formatoFecha.format(autorizacion.getFechaAutorizacion().getTime())), obtenerInfoFactura(facturaSRI.getInfoFactura()));
+			obtenerTotalesFactura(params, facturaSRI);
 			params.put(JRParameter.REPORT_LOCALE, Locale.US);
-			JasperFillManager.fillReportToFile("C:\\ErpLibreries\\resources\\factura.jasper", params, dataSource);
-			String filePdf = JasperExportManager.exportReportToPdfFile("C:\\ErpLibreries\\resources\\factura.jrprint");
+			
+			JasperFillManager.fillReportToFile("C:\\ErpLibreries\\resources\\factura_probersa.jasper", params, dataSource);
+			String filePdf = JasperExportManager.exportReportToPdfFile("C:\\ErpLibreries\\resources\\factura_probersa.jrprint");
 			File file = new File(filePdf);
 			byte[] fileContent = Files.readAllBytes(file.toPath());
 			System.err.println("bytes : " + fileContent);
@@ -129,7 +133,7 @@ public class FacturaWS {
 		}
 	}
 
-	@Test
+//	@Test
 	public void ejecutarFacturacionElectronicaFactura() throws SAXParseException, CertificateException, SAXException,
 			IOException, JAXBException, InterruptedException {
 
@@ -429,5 +433,24 @@ public class FacturaWS {
         	totalesComprobante.add(new TotalesComprobante("VALOR TOTAL", BigDecimal.valueOf(Double.parseDouble(facturaSRI.getInfoFactura().getImporteTotal())), false));
         } 
         return totalesComprobante;
+    }
+    
+    public void obtenerTotalesFactura(Map<String, Object> param, Factura facturaSRI) throws SQLException, ClassNotFoundException {
+        TotalComprobante tc = getTotales(facturaSRI.getInfoFactura());
+        // Convertidor de decimales
+ 		DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
+ 	    decimalSymbols.setDecimalSeparator('.');
+ 		DecimalFormat formatoDecimales = new DecimalFormat("#.##", decimalSymbols);
+ 		formatoDecimales.setMinimumFractionDigits(2);
+        for(IvaDiferenteCeroReporte iva : tc.getIvaDistintoCero()) {
+        	param.put("TARIFAIVA", formatoDecimales.format(iva.getSubtotal()));
+        }
+        for (IvaDiferenteCeroReporte iva : tc.getIvaDistintoCero()) {
+        	param.put("VALORIVA", formatoDecimales.format(iva.getValor()));
+        }
+        param.put("TARIFACERO", formatoDecimales.format(tc.getSubtotal0()));
+        param.put("SUBTOTAL", facturaSRI.getInfoFactura().getTotalSinImpuestos());
+        param.put("DESCUENTO", facturaSRI.getInfoFactura().getTotalDescuento());
+        param.put("TOTAL", facturaSRI.getInfoFactura().getImporteTotal());
     }
 }

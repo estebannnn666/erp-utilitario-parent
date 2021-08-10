@@ -9,13 +9,13 @@ public enum FacturacionElectronicaEnum {
 	 * Ambiente de pruebas
 	 */
 	@XmlEnumValue("1001594132001")
-	RUCPRINCIPA("1001594132001","BENAVIDES VALENZUELA EDUARDO HOMERO","PROBERSA","El Olivo alto SN y SN(a una cuadra de la sede social del barrio)"),
+	RUCPRINCIPA("1001594132001","BENAVIDES VALENZUELA EDUARDO HOMERO","PROBERSA","EL OLIVO ALTO SN y SN(A UNA CUADRA DE LA SEDE SOCIAL DEL BARRIO)"),
 
 	/**
 	 * Ambiente de produccion
 	 */
 	@XmlEnumValue("1003635263001")
-	RUCSECUNDARIO("1003635263001","BENAVIDES BLANCO JOHANA PAMELA","PROBERSA","El Olivo alto SN y SN(a una cuadra de la sede social del barrio)");
+	RUCSECUNDARIO("1003635263001","BENAVIDES BLANCO JOHANA PAMELA","PROBERSA","EL OLIVO ALTO SN y SN(A UNA CUADRA DE LA SEDE SOCIAL DEL BARRIO)");
 
 	private String ruc;
 	private String razonSocial;

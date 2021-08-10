@@ -33,11 +33,11 @@ import ec.com.erp.facturacion.electronica.modelo.TotalImpuesto;
 
 public class ConstruirFacturaUtil {
 	
-	public static Factura crearFactura(String rucFactElectronica, String secuenciaFactura, FacturaCabeceraDTO facturaCabeceraDTO) {
+	public static Factura crearFactura(FacturaCabeceraDTO facturaCabeceraDTO) {
 		Factura factura = new Factura();
 		factura.setVersion("1.0.0");
 		factura.setId("comprobante");
-		factura.setInfoTributaria(crearInfoTributaria(rucFactElectronica, secuenciaFactura));
+		factura.setInfoTributaria(crearInfoTributaria(facturaCabeceraDTO.getTipoRuc(), facturaCabeceraDTO.getNumeroDocumento()));
 		factura.setInfoFactura(crearInfoFactura(facturaCabeceraDTO));
 		factura.setDetalles(crearDetalles(facturaCabeceraDTO.getFacturaDetalleDTOCols()));
 		return factura;
@@ -180,7 +180,7 @@ public class ConstruirFacturaUtil {
 		return infoTributaria;
 	}
 	
-	private static String numeroFactura(String secuenciaFactura) {
+	public static String numeroFactura(String secuenciaFactura) {
 		String cadena = "000000000";
 		int totalCadena = cadena.length();
 		int numeroCaracteres = secuenciaFactura.length();
@@ -190,11 +190,7 @@ public class ConstruirFacturaUtil {
 	}
 	
 	private static String codigoNumerico(String secuenciaFactura) {
-		String cadena = "00000000";
-		int totalCadena = cadena.length();
-		int numeroCaracteres = secuenciaFactura.length();
-		int carRemplazar = totalCadena - numeroCaracteres;
-		String res = cadena.substring(0, carRemplazar);
-		return res+""+secuenciaFactura;
+		int tamCadena = secuenciaFactura.length();
+		return secuenciaFactura.substring(1, tamCadena);
 	}
 }
