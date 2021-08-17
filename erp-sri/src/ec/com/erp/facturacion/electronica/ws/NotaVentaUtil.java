@@ -110,6 +110,8 @@ public class NotaVentaUtil {
 	    	detAd.setPrecioSinSubsidio(BigDecimal.ZERO);
 	    	if (det.getDescuento() != null) {
 	    		detAd.setDescuento(formatoDecimales.format(det.getDescuento()));
+	    	}else{
+	    		detAd.setDescuento("0.00");
 	    	}
 	    	detAd.setDetalle1(det.getArticuloUnidadManejoDTO().getTipoUnidadManejoCatalogoValorDTO().getNombreCatalogoValor());
 	    	detallesAdiciones.add(detAd);

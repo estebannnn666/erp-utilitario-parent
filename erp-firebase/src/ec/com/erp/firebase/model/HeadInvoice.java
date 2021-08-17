@@ -1,7 +1,6 @@
 package ec.com.erp.firebase.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class HeadInvoice implements Serializable{
@@ -14,14 +13,14 @@ public class HeadInvoice implements Serializable{
 	private String clientName; 
 	private String clientPhone; 
 	private Date dateDocument; 
-	private BigDecimal discount; 
+	private Double discount; 
 	private String numberDocument;
 	private Boolean paidOut;
-	private BigDecimal subTotal;
-	private BigDecimal totalInvoice;
-	private BigDecimal totalIva;
-	private BigDecimal totalNotTax;
-	private BigDecimal totalTax;
+	private Double subTotal;
+	private Double totalInvoice;
+	private Double totalIva;
+	private Double totalNotTax;
+	private Double totalTax;
 	private String typeDocumentCode;
 	private String userId;
 	private String seller;
@@ -62,10 +61,10 @@ public class HeadInvoice implements Serializable{
 	public void setDateDocument(Date dateDocument) {
 		this.dateDocument = dateDocument;
 	}
-	public BigDecimal getDiscount() {
+	public Double getDiscount() {
 		return discount;
 	}
-	public void setDiscount(BigDecimal discount) {
+	public void setDiscount(Double discount) {
 		this.discount = discount;
 	}
 	public String getNumberDocument() {
@@ -80,34 +79,34 @@ public class HeadInvoice implements Serializable{
 	public void setPaidOut(Boolean paidOut) {
 		this.paidOut = paidOut;
 	}
-	public BigDecimal getSubTotal() {
+	public Double getSubTotal() {
 		return subTotal;
 	}
-	public void setSubTotal(BigDecimal subTotal) {
+	public void setSubTotal(Double subTotal) {
 		this.subTotal = subTotal;
 	}
-	public BigDecimal getTotalInvoice() {
+	public Double getTotalInvoice() {
 		return totalInvoice;
 	}
-	public void setTotalInvoice(BigDecimal totalInvoice) {
+	public void setTotalInvoice(Double totalInvoice) {
 		this.totalInvoice = totalInvoice;
 	}
-	public BigDecimal getTotalIva() {
+	public Double getTotalIva() {
 		return totalIva;
 	}
-	public void setTotalIva(BigDecimal totalIva) {
+	public void setTotalIva(Double totalIva) {
 		this.totalIva = totalIva;
 	}
-	public BigDecimal getTotalNotTax() {
+	public Double getTotalNotTax() {
 		return totalNotTax;
 	}
-	public void setTotalNotTax(BigDecimal totalNotTax) {
+	public void setTotalNotTax(Double totalNotTax) {
 		this.totalNotTax = totalNotTax;
 	}
-	public BigDecimal getTotalTax() {
+	public Double getTotalTax() {
 		return totalTax;
 	}
-	public void setTotalTax(BigDecimal totalTax) {
+	public void setTotalTax(Double totalTax) {
 		this.totalTax = totalTax;
 	}
 	public String getTypeDocumentCode() {

@@ -157,7 +157,7 @@ public class FacturaElectronocaUtil {
 			ByteArrayOutputStream baosFactura = (new XmlUtil()).convertirObjetoAXml(Factura.class, factura);
 			FirmaXadesBesUtil firmaXadesBesUtil;
 			if(facturaCabeceraDTO.getTipoRuc().equals(ERPConstantes.TIPO_RUC_UNO)) {
-				firmaXadesBesUtil = new FirmaXadesBesUtil("C:\\ErpLibreries\\facturacion\\EDUARDOHOMEROBENAVIDESVALENZUELA140721193429.p12",
+				firmaXadesBesUtil = new FirmaXadesBesUtil("C:\\ErpLibreries\\facturacion\\EDUARDOHOMEROBENAVIDESVALENZUELA160821155846.p12",
 						obtenerPasswordDesdeArchivoFacturaPrincipal());
 			}else {
 				firmaXadesBesUtil = new FirmaXadesBesUtil("C:\\ErpLibreries\\facturacion\\JOHANAPAMELABENAVIDESBLANCO140721193429.p12",

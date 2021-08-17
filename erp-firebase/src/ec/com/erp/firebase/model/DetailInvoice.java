@@ -1,7 +1,6 @@
 package ec.com.erp.firebase.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class DetailInvoice implements Serializable{
 	
@@ -10,12 +9,12 @@ public class DetailInvoice implements Serializable{
 	private Integer idItem; 
 	private String barCodeItem; 
 	private String description; 
-	private BigDecimal discount; 
+	private Double discount; 
 	private Boolean existsTax; 
 	private String numberDocument; 
 	private Integer quantity; 
-	private BigDecimal subTotal; 
-	private BigDecimal unitValue; 
+	private Double subTotal; 
+	private Double unitValue; 
 	private String valueCatalogDriverUnit; 
 	private Integer valueDriverUnit;
 	public Integer getIdItem() {
@@ -36,10 +35,10 @@ public class DetailInvoice implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public BigDecimal getDiscount() {
+	public Double getDiscount() {
 		return discount;
 	}
-	public void setDiscount(BigDecimal discount) {
+	public void setDiscount(Double discount) {
 		this.discount = discount;
 	}
 	public Boolean getExistsTax() {
@@ -60,16 +59,16 @@ public class DetailInvoice implements Serializable{
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	public BigDecimal getSubTotal() {
+	public Double getSubTotal() {
 		return subTotal;
 	}
-	public void setSubTotal(BigDecimal subTotal) {
+	public void setSubTotal(Double subTotal) {
 		this.subTotal = subTotal;
 	}
-	public BigDecimal getUnitValue() {
+	public Double getUnitValue() {
 		return unitValue;
 	}
-	public void setUnitValue(BigDecimal unitValue) {
+	public void setUnitValue(Double unitValue) {
 		this.unitValue = unitValue;
 	}
 	public String getValueCatalogDriverUnit() {

@@ -55,6 +55,20 @@ public class InvoiceProvider {
 	}
 	
 	/**
+	 * Method for update to invoices.
+	 * @param invoiceCols The data of invoices
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 * @throws IOException
+	 */
+	public static void updateInvoice(Collection<Invoice> invoiceCols) throws InterruptedException, ExecutionException, IOException{
+		initialiceFireBase();
+		for(Invoice invoice: invoiceCols){
+			database.child("Invoices").child(""+invoice.getHeader().getIdInvoice()).setValueAsync(invoice).get();
+		}
+	}
+	
+	/**
 	 * Metodo para inicializar la coneccion con la base de datos de fire base
 	 * @throws IOException
 	 */

@@ -4,8 +4,8 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import ec.com.erp.cliente.common.constantes.ERPConstantes;
@@ -37,7 +37,7 @@ public class ConstruirFacturaUtil {
 		Factura factura = new Factura();
 		factura.setVersion("1.0.0");
 		factura.setId("comprobante");
-		factura.setInfoTributaria(crearInfoTributaria(facturaCabeceraDTO.getTipoRuc(), facturaCabeceraDTO.getNumeroDocumento()));
+		factura.setInfoTributaria(crearInfoTributaria(facturaCabeceraDTO.getFechaDocumento(), facturaCabeceraDTO.getTipoRuc(), facturaCabeceraDTO.getNumeroDocumento()));
 		factura.setInfoFactura(crearInfoFactura(facturaCabeceraDTO));
 		factura.setDetalles(crearDetalles(facturaCabeceraDTO.getFacturaDetalleDTOCols()));
 		return factura;
@@ -54,7 +54,7 @@ public class ConstruirFacturaUtil {
 		facturaDetalleDTOCols.stream().forEach(detalleFactura ->{
 			if(detalleFactura.getCodigoArticulo() != null){
 				Detalle detalle = new Detalle();
-				detalle.setCodigoPrincipal(detalleFactura.getCodigoBarras());
+				detalle.setCodigoPrincipal(detalleFactura.getArticuloDTO().getCodigoBarras());
 				detalle.setCodigoAuxiliar(detalleFactura.getCodigoArticulo().toString());
 				detalle.setDescripcion(detalleFactura.getDescripcion());
 				detalle.setCantidad(detalleFactura.getCantidad().toString());
@@ -155,7 +155,7 @@ public class ConstruirFacturaUtil {
 		return totalImpuestos;
 	}
 	
-	private static InfoTributaria crearInfoTributaria(String rucFactElectronica, String secuenciaFactura) {
+	private static InfoTributaria crearInfoTributaria(Date fechaEmision, String rucFactElectronica, String secuenciaFactura) {
 		InfoTributaria infoTributaria = new InfoTributaria();
 		infoTributaria.setAmbiente(AmbienteEnum.PRUEBAS);
 		infoTributaria.setTipoEmision(TipoEmisionEnum.NORMAL);
@@ -175,8 +175,7 @@ public class ConstruirFacturaUtil {
 		infoTributaria.setEstab("001");
 		infoTributaria.setPtoEmi("001");
 		infoTributaria.setSecuencial(numeroFactura(secuenciaFactura));
-		Calendar cal = Calendar.getInstance();
-		infoTributaria.generarClaveAcceso(cal.getTime(), TipoComprobanteEnum.FACTURA, codigoNumerico(secuenciaFactura));
+		infoTributaria.generarClaveAcceso(fechaEmision, TipoComprobanteEnum.FACTURA, codigoNumerico(secuenciaFactura));
 		return infoTributaria;
 	}
 	
