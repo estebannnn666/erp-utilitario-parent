@@ -11,4 +11,13 @@
 			<export key="net.sf.jasperreports.html">'DejaVu Sans Mono', 'Courier New', Courier, monospace</export>
 		</exportFonts>
 	</fontFamily>
+	
+	<fontFamily name="Arial Unicode MS">
+		<normal>ec/com/erp/fuentes/report/arialunicodems/Arial-Unicode-MS.ttf</normal>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">'Arial Unicode MS'</export>
+		</exportFonts>
+	</fontFamily>
 </fontFamilies>

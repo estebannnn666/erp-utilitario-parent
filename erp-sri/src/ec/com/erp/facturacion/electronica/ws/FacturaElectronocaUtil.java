@@ -93,7 +93,7 @@ import net.sf.jasperreports.engine.util.JRXmlUtils;
 
 public class FacturaElectronocaUtil {
 	
-	public static byte[] imprimirRideFactura(byte[] xmlFactura) throws JRException, IOException {
+	public static byte[] imprimirRideFactura(byte[] xmlFactura) throws IOException {
 		try {
 			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
 			Map<String, Object> params = new ConcurrentHashMap<>();
