@@ -65,7 +65,7 @@ public class ConstruirFacturaUtil {
 				List<DetAdicional> detallesAdicionales = new ArrayList<>();
 				DetAdicional detAdicional = new DetAdicional();
 				detallesAdicionales.add(detAdicional);
-				detAdicional.setNombre(detalleFactura.getArticuloUnidadManejoDTO().getTipoUnidadManejoCatalogoValorDTO().getNombreCatalogoValor());
+				detAdicional.setNombre(detalleFactura.getArticuloUnidadManejoDTO().getCodigoValorUnidadManejo().equals("UNI") ? detalleFactura.getArticuloUnidadManejoDTO().getTipoUnidadManejoCatalogoValorDTO().getNombreCatalogoValor() : detalleFactura.getArticuloUnidadManejoDTO().getTipoUnidadManejoCatalogoValorDTO().getNombreCatalogoValor()+"x"+detalleFactura.getArticuloUnidadManejoDTO().getValorUnidadManejo());
 				detAdicional.setValor(detalleFactura.getArticuloUnidadManejoDTO().getValorUnidadManejo().toString());
 				detalle.setDetallesAdicionales(detallesAdicionales);
 	
