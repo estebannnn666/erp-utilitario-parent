@@ -69,7 +69,7 @@ public class NotaVentaUtil {
 		param.put("NUM_AUT", facturaCabeceraDTO.getCodigoReferenciaFactura());
 		param.put("FECHA_AUT", formatoFecha.format(facturaCabeceraDTO.getFechaDocumento()));
 		param.put("FECHA_EMISION", formatoFecha.format(facturaCabeceraDTO.getFechaDocumento()));
-		param.put("EMAIL_EMPRESA", "jpame_21@hotmail.com");
+		param.put("EMAIL_EMPRESA", "disebv@hotmail.com");
 		param.put("RUC_CLIENTE", facturaCabeceraDTO.getRucDocumento());
 		param.put("RAZON_SOCIAL", facturaCabeceraDTO.getNombreClienteProveedor());
 		param.put("SUCURSAL", "IBARRA - ECUADOR");
@@ -113,7 +113,7 @@ public class NotaVentaUtil {
 	    	}else{
 	    		detAd.setDescuento("0.00");
 	    	}
-	    	detAd.setDetalle1(det.getArticuloUnidadManejoDTO().getTipoUnidadManejoCatalogoValorDTO().getNombreCatalogoValor());
+	    	detAd.setDetalle1(det.getArticuloUnidadManejoDTO().getCodigoValorUnidadManejo().equals("UNI") ? det.getArticuloUnidadManejoDTO().getTipoUnidadManejoCatalogoValorDTO().getNombreCatalogoValor() : det.getArticuloUnidadManejoDTO().getTipoUnidadManejoCatalogoValorDTO().getNombreCatalogoValor()+"x"+det.getArticuloUnidadManejoDTO().getValorUnidadManejo());
 	    	detallesAdiciones.add(detAd);
 	    } 
 	    return detallesAdiciones;
