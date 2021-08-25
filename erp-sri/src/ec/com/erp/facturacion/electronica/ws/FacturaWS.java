@@ -294,7 +294,7 @@ public class FacturaWS {
 
 	private InputStream obtenerMarcaAgua(String ambiente) {
 		try {
-			if (ambiente.equals(AmbienteEnum.PRODUCCION.getCodigo())) {
+			if (ambiente.equals(AmbienteEnum.PRUEBAS.getCodigo())) {
 				return new BufferedInputStream(new FileInputStream("C:\\ErpLibreries\\imagenes\\produccion.jpeg"));
 			}
 

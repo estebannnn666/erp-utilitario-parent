@@ -137,7 +137,7 @@ public class InfoTributaria implements Serializable {
 		if (claveAcceso.length() != 49) {
 			throw new IllegalArgumentException("Clave de acceso debe tener 49 digitos, actual: " + claveAcceso);
 		}
-		System.out.println("Clave de Acceso" + claveAcceso + "\n");
+		System.out.println("Clave de Acceso: " + claveAcceso + "\n");
 		this.claveAcceso = claveAcceso;
 	}
 
