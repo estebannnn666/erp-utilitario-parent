@@ -58,7 +58,7 @@ public class ConstruirFacturaUtil {
 				detalle.setCodigoAuxiliar(detalleFactura.getCodigoArticulo().toString());
 				detalle.setDescripcion(detalleFactura.getDescripcion());
 				detalle.setCantidad(detalleFactura.getCantidad().toString());
-				detalle.setPrecioUnitario(formatoDecimales.format(detalleFactura.getValorUnidad().doubleValue()));
+				detalle.setPrecioUnitario(formatoDecimales.format(detalleFactura.getValorUnidad().doubleValue() * detalleFactura.getArticuloUnidadManejoDTO().getValorUnidadManejo()));
 				detalle.setPrecioTotalSinImpuesto(formatoDecimales.format(detalleFactura.getSubTotal().doubleValue()));
 				detalle.setDescuento(detalleFactura.getDescuento() == null ? "0.00" : formatoDecimales.format(detalleFactura.getDescuento().doubleValue()));
 				
