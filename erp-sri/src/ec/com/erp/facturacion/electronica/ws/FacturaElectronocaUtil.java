@@ -166,7 +166,7 @@ public class FacturaElectronocaUtil {
 			ByteArrayOutputStream baosFacturaFirmada = new ByteArrayOutputStream();
 			firmaXadesBesUtil.firmarDocumento(new ByteArrayInputStream(baosFactura.toByteArray()), baosFacturaFirmada);
 	
-			URL wsdlLocation = new URL(AmbienteEnum.PRUEBAS.getUrlRecepcion());
+			URL wsdlLocation = new URL(AmbienteEnum.PRODUCCION.getUrlRecepcion());
 	        QName serviceName = new QName("http://ec.gob.sri.ws.recepcion", "RecepcionComprobantesOfflineService");
 			RecepcionComprobantesOfflineService webServiceRecepcion = new RecepcionComprobantesOfflineService(wsdlLocation, serviceName);
 			RecepcionComprobantesOffline port1 = webServiceRecepcion.getRecepcionComprobantesOfflinePort();
@@ -186,7 +186,7 @@ public class FacturaElectronocaUtil {
 	
 			Thread.sleep(4500);
 	
-			URL wsdLocationAut = new URL(AmbienteEnum.PRUEBAS.getUrlAutorizacion());
+			URL wsdLocationAut = new URL(AmbienteEnum.PRODUCCION.getUrlAutorizacion());
 			QName serviceNameAut = new QName("http://ec.gob.sri.ws.autorizacion", "AutorizacionComprobantesOfflineService");
 			AutorizacionComprobantesOfflineService webServiceAutorizacion = new AutorizacionComprobantesOfflineService(wsdLocationAut, serviceNameAut);
 			AutorizacionComprobantesOffline port2 = webServiceAutorizacion.getAutorizacionComprobantesOfflinePort();
@@ -304,7 +304,7 @@ public class FacturaElectronocaUtil {
 
 	private static InputStream obtenerMarcaAgua(String ambiente) {
 		try {
-			if (ambiente.equals(AmbienteEnum.PRUEBAS.getCodigo())) {
+			if (ambiente.equals(AmbienteEnum.PRODUCCION.getCodigo())) {
 				return new BufferedInputStream(new FileInputStream("C:\\ErpLibreries\\imagenes\\produccion.jpeg"));
 			}
 

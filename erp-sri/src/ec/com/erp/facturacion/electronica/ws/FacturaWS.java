@@ -147,7 +147,7 @@ public class FacturaWS {
 			ByteArrayOutputStream baosFacturaFirmada = new ByteArrayOutputStream();
 			firmaXadesBesUtil.firmarDocumento(new ByteArrayInputStream(baosFactura.toByteArray()), baosFacturaFirmada);
 
-			URL wsdlLocation = new URL(AmbienteEnum.PRUEBAS.getUrlRecepcion());
+			URL wsdlLocation = new URL(AmbienteEnum.PRODUCCION.getUrlRecepcion());
 			QName serviceName = new QName("http://ec.gob.sri.ws.recepcion", "RecepcionComprobantesOfflineService");
 			RecepcionComprobantesOfflineService webServiceRecepcion = new RecepcionComprobantesOfflineService(
 					wsdlLocation, serviceName);
@@ -167,7 +167,7 @@ public class FacturaWS {
 
 			Thread.sleep(4500);
 
-			URL wsdLocationAut = new URL(AmbienteEnum.PRUEBAS.getUrlAutorizacion());
+			URL wsdLocationAut = new URL(AmbienteEnum.PRODUCCION.getUrlAutorizacion());
 			QName serviceNameAut = new QName("http://ec.gob.sri.ws.autorizacion",
 					"AutorizacionComprobantesOfflineService");
 			AutorizacionComprobantesOfflineService webServiceAutorizacion = new AutorizacionComprobantesOfflineService(
@@ -294,7 +294,7 @@ public class FacturaWS {
 
 	private InputStream obtenerMarcaAgua(String ambiente) {
 		try {
-			if (ambiente.equals(AmbienteEnum.PRUEBAS.getCodigo())) {
+			if (ambiente.equals(AmbienteEnum.PRODUCCION.getCodigo())) {
 				return new BufferedInputStream(new FileInputStream("C:\\ErpLibreries\\imagenes\\produccion.jpeg"));
 			}
 

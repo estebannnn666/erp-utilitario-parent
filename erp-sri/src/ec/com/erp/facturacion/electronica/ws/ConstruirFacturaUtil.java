@@ -1,5 +1,6 @@
 package ec.com.erp.facturacion.electronica.ws;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -39,11 +40,11 @@ public class ConstruirFacturaUtil {
 		factura.setId("comprobante");
 		factura.setInfoTributaria(crearInfoTributaria(facturaCabeceraDTO.getFechaDocumento(), facturaCabeceraDTO.getTipoRuc(), facturaCabeceraDTO.getNumeroDocumento()));
 		factura.setInfoFactura(crearInfoFactura(facturaCabeceraDTO));
-		factura.setDetalles(crearDetalles(facturaCabeceraDTO.getFacturaDetalleDTOCols()));
+		factura.setDetalles(crearDetalles(facturaCabeceraDTO, facturaCabeceraDTO.getFacturaDetalleDTOCols()));
 		return factura;
 	}
 
-	private static List<Detalle> crearDetalles(Collection<FacturaDetalleDTO> facturaDetalleDTOCols) {
+	private static List<Detalle> crearDetalles(FacturaCabeceraDTO facturaCabeceraDTO, Collection<FacturaDetalleDTO> facturaDetalleDTOCols) {
 		// Convertidor de decimales
 		DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
 	    decimalSymbols.setDecimalSeparator('.');
@@ -58,7 +59,7 @@ public class ConstruirFacturaUtil {
 				detalle.setCodigoAuxiliar(detalleFactura.getCodigoArticulo().toString());
 				detalle.setDescripcion(detalleFactura.getDescripcion());
 				detalle.setCantidad(detalleFactura.getCantidad().toString());
-				detalle.setPrecioUnitario(formatoDecimales.format(detalleFactura.getValorUnidad().doubleValue() * detalleFactura.getArticuloUnidadManejoDTO().getValorUnidadManejo()));
+				detalle.setPrecioUnitario(formatoDecimales.format(obtenerValorUnitario(facturaCabeceraDTO, detalleFactura)));
 				detalle.setPrecioTotalSinImpuesto(formatoDecimales.format(detalleFactura.getSubTotal().doubleValue()));
 				detalle.setDescuento(detalleFactura.getDescuento() == null ? "0.00" : formatoDecimales.format(detalleFactura.getDescuento().doubleValue()));
 				
@@ -88,6 +89,16 @@ public class ConstruirFacturaUtil {
 			}
 		});
 		return detalles;
+	}
+	
+	private static BigDecimal obtenerValorUnitario(FacturaCabeceraDTO facturaCabeceraDTO, FacturaDetalleDTO facturaDetalleDTO){
+		BigDecimal valorUnitario;
+		if(facturaCabeceraDTO.getTipoCliente().equals(ERPConstantes.CODIGO_CATALOGO_VALOR_CLIENTE_MINORISTA)) {
+			valorUnitario = BigDecimal.valueOf(facturaDetalleDTO.getArticuloDTO().getPrecioMinorista().doubleValue() * facturaDetalleDTO.getArticuloUnidadManejoDTO().getValorUnidadManejo());
+		}else {
+			valorUnitario = BigDecimal.valueOf(facturaDetalleDTO.getArticuloDTO().getPrecio().doubleValue() * facturaDetalleDTO.getArticuloUnidadManejoDTO().getValorUnidadManejo());
+		}
+		return valorUnitario;
 	}
 
 	private static InfoFactura crearInfoFactura(FacturaCabeceraDTO facturaCabeceraDTO) {
@@ -157,7 +168,7 @@ public class ConstruirFacturaUtil {
 	
 	private static InfoTributaria crearInfoTributaria(Date fechaEmision, String rucFactElectronica, String secuenciaFactura) {
 		InfoTributaria infoTributaria = new InfoTributaria();
-		infoTributaria.setAmbiente(AmbienteEnum.PRUEBAS);
+		infoTributaria.setAmbiente(AmbienteEnum.PRODUCCION);
 		infoTributaria.setTipoEmision(TipoEmisionEnum.NORMAL);
 		if(rucFactElectronica.equals(ERPConstantes.TIPO_RUC_UNO)) {
 			infoTributaria.setRazonSocial(FacturacionElectronicaEnum.RUCPRINCIPA.getRazonSocial());

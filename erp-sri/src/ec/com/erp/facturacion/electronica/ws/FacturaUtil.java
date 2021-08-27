@@ -156,7 +156,7 @@ public class FacturaUtil {
 
 	public InfoTributaria crearInfoTributaria() {
 		InfoTributaria infoTributaria = new InfoTributaria();
-		infoTributaria.setAmbiente(AmbienteEnum.PRUEBAS);
+		infoTributaria.setAmbiente(AmbienteEnum.PRODUCCION);
 		infoTributaria.setTipoEmision(TipoEmisionEnum.NORMAL);
 		infoTributaria.setRazonSocial("JOHANA PAMELA BENAVIDES BLANCO");
 		infoTributaria.setNombreComercial("NOMBRE COMERCIAL");
