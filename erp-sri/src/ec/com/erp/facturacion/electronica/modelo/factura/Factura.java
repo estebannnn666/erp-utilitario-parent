@@ -1,4 +1,4 @@
-package ec.com.erp.facturacion.electronica.modelo;
+package ec.com.erp.facturacion.electronica.modelo.factura;
 
 import java.io.Serializable;
 import java.util.List;
@@ -36,15 +36,13 @@ public class Factura implements Serializable {
 	@XmlElement(name = "detalle")
 	private List<Detalle> detalles;
 
-	@XmlElementWrapper(name = "infoAdicional")
-	@XmlElement(name = "campoAdicional")
-	private List<CampoAdicional> infoAdicional;
+	protected InformacionAdicional infoAdicional;
 
-	public List<CampoAdicional> getInfoAdicional() {
+	public InformacionAdicional getInfoAdicional() {
 		return infoAdicional;
 	}
 
-	public void setInfoAdicional(List<CampoAdicional> infoAdicional) {
+	public void setInfoAdicional(InformacionAdicional infoAdicional) {
 		this.infoAdicional = infoAdicional;
 	}
 

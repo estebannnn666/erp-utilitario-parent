@@ -1,4 +1,4 @@
-package ec.com.erp.facturacion.electronica.modelo;
+package ec.com.erp.facturacion.electronica.modelo.factura;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -12,7 +12,6 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 import ec.com.erp.facturacion.electronica.enumeradores.AmbienteEnum;
-import ec.com.erp.facturacion.electronica.enumeradores.TipoComprobanteEnum;
 import ec.com.erp.facturacion.electronica.enumeradores.TipoEmisionEnum;
 import ec.com.erp.facturacion.electronica.util.Modulo11Util;
 
@@ -105,7 +104,7 @@ public class InfoTributaria implements Serializable {
 		return claveAcceso;
 	}
 
-	public void generarClaveAcceso(Date fechaEmision, TipoComprobanteEnum tipoComprobante, String codigoNumerico) {
+	public void generarClaveAcceso(Date fechaEmision, String tipoComprobante, String codigoNumerico) {
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
 		if (codigoNumerico.length() != 8) {
 			throw new IllegalArgumentException("Codigo numerico debe tener 8 digitos");
@@ -128,7 +127,7 @@ public class InfoTributaria implements Serializable {
 		if (secuencial == null) {
 			throw new IllegalArgumentException("Secuencial no asignado");
 		}
-		String claveSinDigitoVerificador = sdf.format(fechaEmision) + tipoComprobante.getCodigo() + ruc
+		String claveSinDigitoVerificador = sdf.format(fechaEmision) + tipoComprobante + ruc
 				+ ambiente.getCodigo() + estab + ptoEmi + secuencial + codigoNumerico + tipoEmision.getCodigo();
 		Modulo11Util modulo11Util = new Modulo11Util();
 

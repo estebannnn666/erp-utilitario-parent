@@ -1,4 +1,4 @@
-package ec.com.erp.facturacion.electronica.modelo;
+package ec.com.erp.facturacion.electronica.modelo.factura;
 
 import java.math.BigDecimal;
 import java.util.List;

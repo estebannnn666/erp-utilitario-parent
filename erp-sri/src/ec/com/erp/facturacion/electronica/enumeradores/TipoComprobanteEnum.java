@@ -10,7 +10,7 @@ public enum TipoComprobanteEnum {
 	/**
 	 * Nota de Credito
 	 */
-	NOTA_DE_CREDITO("02"),
+	NOTA_DE_CREDITO("04"),
 
 	/**
 	 * Nota de Credito

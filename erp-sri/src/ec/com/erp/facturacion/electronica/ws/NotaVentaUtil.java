@@ -23,7 +23,7 @@ import ec.com.erp.cliente.common.exception.ERPException;
 import ec.com.erp.cliente.mdl.dto.FacturaCabeceraDTO;
 import ec.com.erp.cliente.mdl.dto.FacturaDetalleDTO;
 import ec.com.erp.facturacion.electronica.enumeradores.FacturacionElectronicaEnum;
-import ec.com.erp.facturacion.electronica.modelo.DetallesAdicionalesReporte;
+import ec.com.erp.facturacion.electronica.modelo.factura.DetallesAdicionalesReporte;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRParameter;
@@ -58,23 +58,29 @@ public class NotaVentaUtil {
 		} catch (FileNotFoundException ex) {
 			try {
 				param.put("LOGO", new FileInputStream("C:\\ErpLibreries\\imagenes\\logo.jpeg"));
-				Logger.getLogger(FacturaWS.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(NotaVentaUtil.class.getName()).log(Level.SEVERE, null, ex);
 			} catch (FileNotFoundException ex1) {
-				Logger.getLogger(FacturaWS.class.getName()).log(Level.SEVERE, null, ex1);
+				Logger.getLogger(NotaVentaUtil.class.getName()).log(Level.SEVERE, null, ex1);
 			}
 		}
 		param.put("RUC", FacturacionElectronicaEnum.RUCPRINCIPA.getRuc());
 		param.put("NUM_FACT", facturaCabeceraDTO.getNumeroDocumento());
 		param.put("DIR_MATRIZ", FacturacionElectronicaEnum.RUCPRINCIPA.getDireccion());
 		param.put("NUM_AUT", facturaCabeceraDTO.getCodigoReferenciaFactura());
-		param.put("FECHA_AUT", formatoFecha.format(facturaCabeceraDTO.getFechaDocumento()));
+		param.put("CIUDAD", facturaCabeceraDTO.getCiudad() == null || facturaCabeceraDTO.getCiudad().trim() == "" ? "N/D" : facturaCabeceraDTO.getCiudad());
 		param.put("FECHA_EMISION", formatoFecha.format(facturaCabeceraDTO.getFechaDocumento()));
 		param.put("EMAIL_EMPRESA", "disebv@hotmail.com");
 		param.put("RUC_CLIENTE", facturaCabeceraDTO.getRucDocumento());
 		param.put("RAZON_SOCIAL", facturaCabeceraDTO.getNombreClienteProveedor());
-		param.put("SUCURSAL", "IBARRA - ECUADOR");
+		param.put("VENDEDOR", facturaCabeceraDTO.getVendedorDTO() == null ? "N/D" : facturaCabeceraDTO.getVendedorDTO().getPersonaDTO().getNombreCompleto());
 		param.put("TELEFONO", facturaCabeceraDTO.getTelefono());
 		param.put("DIRECCION", facturaCabeceraDTO.getDireccion());
+		param.put("CIUDAD", facturaCabeceraDTO.getCiudad());
+		if(facturaCabeceraDTO.getVendedorDTO() == null){
+			param.put("VENDEDOR", "N/D");
+		}else{
+			param.put("VENDEDOR", facturaCabeceraDTO.getVendedorDTO().getPersonaDTO().getNombreCompleto());
+		}
 		
 		// Convertidor de decimales
 		DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
