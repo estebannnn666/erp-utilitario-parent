@@ -21,15 +21,17 @@ import ec.com.erp.facturacion.electronica.enumeradores.TarifaEnum;
 import ec.com.erp.facturacion.electronica.enumeradores.TipoEmisionEnum;
 import ec.com.erp.facturacion.electronica.modelo.factura.DetAdicional;
 import ec.com.erp.facturacion.electronica.modelo.factura.Detalle;
+import ec.com.erp.facturacion.electronica.modelo.factura.DetalleNotaCredito;
 import ec.com.erp.facturacion.electronica.modelo.factura.Impuesto;
 import ec.com.erp.facturacion.electronica.modelo.factura.InfoTributaria;
 import ec.com.erp.facturacion.electronica.modelo.factura.TotalImpuesto;
+import ec.com.erp.facturacion.electronica.modelo.factura.TotalImpuestoNotaCredito;
 
 public class ConstruirDocumentoUtil {
 	
 	public static InfoTributaria crearInfoTributaria(String tipoComprobante, Date fechaEmision, String rucFactElectronica, String secuenciaDocumento, String codigoEstablecimiento, String codigoPuntoEmision) {
 		InfoTributaria infoTributaria = new InfoTributaria();
-		infoTributaria.setAmbiente(AmbienteEnum.PRODUCCION);
+		infoTributaria.setAmbiente(AmbienteEnum.PRUEBAS);
 		infoTributaria.setTipoEmision(TipoEmisionEnum.NORMAL);
 		if(rucFactElectronica.equals(ERPConstantes.TIPO_RUC_UNO)) {
 			infoTributaria.setRazonSocial(FacturacionElectronicaEnum.RUCPRINCIPA.getRazonSocial());
@@ -103,19 +105,18 @@ public class ConstruirDocumentoUtil {
 		return detalles;
 	}
 	
-	public static List<Detalle> crearDetallesNotaCredito(NotaCreditoDTO notaCreditoDTO, Collection<NotaCreditoDetalleDTO> notaCreditoDetalleDTOCols) {
+	public static List<DetalleNotaCredito> crearDetallesNotaCredito(NotaCreditoDTO notaCreditoDTO, Collection<NotaCreditoDetalleDTO> notaCreditoDetalleDTOCols) {
 		// Convertidor de decimales
 		DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
 	    decimalSymbols.setDecimalSeparator('.');
 		DecimalFormat formatoDecimales = new DecimalFormat("#.##", decimalSymbols);
 		formatoDecimales.setMinimumFractionDigits(2);
 		// Agregar detalles
-		List<Detalle> detalles = new ArrayList<>();
+		List<DetalleNotaCredito> detalles = new ArrayList<>();
 		notaCreditoDetalleDTOCols.stream().forEach(detalleFactura ->{
 			if(detalleFactura.getCodigoArticulo() != null){
-				Detalle detalle = new Detalle();
-				detalle.setCodigoPrincipal(detalleFactura.getArticuloDTO().getCodigoBarras());
-				detalle.setCodigoAuxiliar(detalleFactura.getCodigoArticulo().toString());
+				DetalleNotaCredito detalle = new DetalleNotaCredito();
+				detalle.setCodigoInterno(detalleFactura.getArticuloDTO().getCodigoBarras());
 				detalle.setDescripcion(detalleFactura.getDescripcion());
 				detalle.setCantidad(detalleFactura.getCantidad().toString());
 				detalle.setPrecioUnitario(formatoDecimales.format(obtenerValorUnitarioNotaCredito(notaCreditoDTO, detalleFactura)));
@@ -195,25 +196,25 @@ public class ConstruirDocumentoUtil {
 		return totalImpuestos;
 	}
 	
-	public static List<TotalImpuesto> crearTotalImpuestosNotaCredito(NotaCreditoDTO notaCreditoDTO) {
+	public static List<TotalImpuestoNotaCredito> crearTotalImpuestosNotaCredito(NotaCreditoDTO notaCreditoDTO) {
 		DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
 	    decimalSymbols.setDecimalSeparator('.');
 		DecimalFormat formatoDecimales = new DecimalFormat("#.##", decimalSymbols);
 		formatoDecimales.setMinimumFractionDigits(2);
-		List<TotalImpuesto> totalImpuestos = new ArrayList<>();
+		List<TotalImpuestoNotaCredito> totalImpuestos = new ArrayList<>();
 		
-		TotalImpuesto totalImpuestoZero = new TotalImpuesto();
-		totalImpuestoZero.setCodigo(CodigoImpuestoEnum.IVA);
-		totalImpuestoZero.setCodigoPorcentaje(CodigoPorcentajeEnum.IVA_0);
-		totalImpuestoZero.setTarifa(TarifaEnum.IVA_0);
-		totalImpuestoZero.setBaseImponible(formatoDecimales.format(notaCreditoDTO.getTotalSinImpuestos().doubleValue()));
-		totalImpuestoZero.setValor("0.00");
-		totalImpuestos.add(totalImpuestoZero);
+		if(notaCreditoDTO.getTotalSinImpuestos().doubleValue() > 0){
+			TotalImpuestoNotaCredito totalImpuestoZero = new TotalImpuestoNotaCredito();
+			totalImpuestoZero.setCodigo(CodigoImpuestoEnum.IVA);
+			totalImpuestoZero.setCodigoPorcentaje(CodigoPorcentajeEnum.IVA_0);
+			totalImpuestoZero.setBaseImponible(formatoDecimales.format(notaCreditoDTO.getTotalSinImpuestos().doubleValue()));
+			totalImpuestoZero.setValor("0.00");
+			totalImpuestos.add(totalImpuestoZero);
+		}
 		
-		TotalImpuesto totalImpuesto = new TotalImpuesto();
+		TotalImpuestoNotaCredito totalImpuesto = new TotalImpuestoNotaCredito();
 		totalImpuesto.setCodigo(CodigoImpuestoEnum.IVA);
 		totalImpuesto.setCodigoPorcentaje(CodigoPorcentajeEnum.IVA_12);
-		totalImpuesto.setTarifa(TarifaEnum.IVA_12);
 		totalImpuesto.setBaseImponible(formatoDecimales.format(notaCreditoDTO.getTotalImpuestos().doubleValue()));
 		totalImpuesto.setValor(formatoDecimales.format(notaCreditoDTO.getTotalIva().doubleValue()));
 		totalImpuestos.add(totalImpuesto);

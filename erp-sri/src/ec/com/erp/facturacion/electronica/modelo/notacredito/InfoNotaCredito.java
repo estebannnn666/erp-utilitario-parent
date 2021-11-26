@@ -16,6 +16,7 @@ import ec.com.erp.facturacion.electronica.enumeradores.MonedaEnum;
 import ec.com.erp.facturacion.electronica.enumeradores.ObligadoContabilidadEnum;
 import ec.com.erp.facturacion.electronica.enumeradores.TipoIdentificacionCompradorEnum;
 import ec.com.erp.facturacion.electronica.modelo.factura.TotalImpuesto;
+import ec.com.erp.facturacion.electronica.modelo.factura.TotalImpuestoNotaCredito;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -69,7 +70,7 @@ public class InfoNotaCredito implements Serializable {
 
 	@XmlElementWrapper(name = "totalConImpuestos")
 	@XmlElement(name = "totalImpuesto")
-	private List<TotalImpuesto> totalConImpuestos;
+	private List<TotalImpuestoNotaCredito> totalConImpuestos;
 
 	@XmlElement(required = true)
 	private String motivo;
@@ -186,11 +187,11 @@ public class InfoNotaCredito implements Serializable {
 		this.moneda = moneda;
 	}
 
-	public List<TotalImpuesto> getTotalConImpuestos() {
+	public List<TotalImpuestoNotaCredito> getTotalConImpuestos() {
 		return totalConImpuestos;
 	}
 
-	public void setTotalConImpuestos(List<TotalImpuesto> totalConImpuestos) {
+	public void setTotalConImpuestos(List<TotalImpuestoNotaCredito> totalConImpuestos) {
 		this.totalConImpuestos = totalConImpuestos;
 	}
 

@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import ec.com.erp.facturacion.electronica.modelo.factura.CampoAdicional;
 import ec.com.erp.facturacion.electronica.modelo.factura.Detalle;
+import ec.com.erp.facturacion.electronica.modelo.factura.DetalleNotaCredito;
 import ec.com.erp.facturacion.electronica.modelo.factura.InfoTributaria;
 import ec.com.erp.facturacion.electronica.modelo.factura.InformacionAdicional;
 
@@ -35,7 +36,7 @@ public class NotaCredito implements Serializable {
 
 	@XmlElementWrapper(name = "detalles")
 	@XmlElement(name = "detalle")
-	private List<Detalle> detalles;
+	private List<DetalleNotaCredito> detalles;
 
 	private InformacionAdicional infoAdicional;
 	
@@ -61,11 +62,11 @@ public class NotaCredito implements Serializable {
 		this.infoNotaCredito = infoNotaCredito;
 	}
 
-	public List<Detalle> getDetalles() {
+	public List<DetalleNotaCredito> getDetalles() {
 		return detalles;
 	}
 
-	public void setDetalles(List<Detalle> detalles) {
+	public void setDetalles(List<DetalleNotaCredito> detalles) {
 		this.detalles = detalles;
 	}
 

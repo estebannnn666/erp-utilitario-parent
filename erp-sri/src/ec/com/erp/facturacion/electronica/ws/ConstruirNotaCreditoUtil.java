@@ -35,7 +35,7 @@ public class ConstruirNotaCreditoUtil {
 		
 		CampoInfoAdicional vendedor = new CampoInfoAdicional();
 		vendedor.setNombre("Email");
-		vendedor.setValue(notaCreditoDTO.getEmail());
+		vendedor.setValue(notaCreditoDTO.getEmail() != null && !notaCreditoDTO.getEmail().trim().equals("") ? notaCreditoDTO.getEmail() : "No tiene correo");
 		info.getCampoAdicional().add(vendedor);
 		
 		notaCredito.setInfoAdicional(info);
@@ -64,13 +64,13 @@ public class ConstruirNotaCreditoUtil {
 		infoNotaCredito.setIdentificacionComprador(notaCreditoDTO.getRucCliente());
 		infoNotaCredito.setObligadoContabilidad(ObligadoContabilidadEnum.NO);
 		infoNotaCredito.setCodDocModificado(TipoComprobanteEnum.FACTURA.getCodigo());
-		infoNotaCredito.setNumDocModificado(notaCreditoDTO.getNumeroDocumento());
+		infoNotaCredito.setNumDocModificado(notaCreditoDTO.getNumeroComprobante());
 		infoNotaCredito.setTotalConImpuestos(ConstruirDocumentoUtil.crearTotalImpuestosNotaCredito(notaCreditoDTO));
-		infoNotaCredito.setFechaEmisionDocSustento((new SimpleDateFormat("dd/MM/YYYY")).format(notaCreditoDTO.getFechaDocumento()));
-		infoNotaCredito.setTotalSinImpuestos(notaCreditoDTO.getTotalSinImpuestos().setScale(2, RoundingMode.HALF_UP));
+		infoNotaCredito.setFechaEmisionDocSustento((new SimpleDateFormat("dd/MM/YYYY")).format(notaCreditoDTO.getFechaEmisionFactura()));
+		infoNotaCredito.setTotalSinImpuestos(notaCreditoDTO.getSubTotal().setScale(2, RoundingMode.HALF_UP));
 		infoNotaCredito.setValorModificacion(notaCreditoDTO.getTotalCuenta().setScale(2, RoundingMode.HALF_UP));
 		infoNotaCredito.setMoneda(MonedaEnum.DOLAR);
-		infoNotaCredito.setMotivo("CANCELA FACTURA");
+		infoNotaCredito.setMotivo(notaCreditoDTO.getMotivo());
 		return infoNotaCredito;
 	}
 	
