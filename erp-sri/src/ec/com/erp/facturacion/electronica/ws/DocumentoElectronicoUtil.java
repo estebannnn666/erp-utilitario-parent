@@ -65,7 +65,7 @@ public class DocumentoElectronicoUtil {
 			ByteArrayOutputStream baosFacturaFirmada = new ByteArrayOutputStream();
 			firmaXadesBesUtil.firmarDocumento(new ByteArrayInputStream(baosFactura.toByteArray()), baosFacturaFirmada);
 	
-			URL wsdlLocation = new URL(AmbienteEnum.PRUEBAS.getUrlRecepcion());
+			URL wsdlLocation = new URL(AmbienteEnum.PRODUCCION.getUrlRecepcion());
 	        QName serviceName = new QName("http://ec.gob.sri.ws.recepcion", "RecepcionComprobantesOfflineService");
 			RecepcionComprobantesOfflineService webServiceRecepcion = new RecepcionComprobantesOfflineService(wsdlLocation, serviceName);
 			RecepcionComprobantesOffline port1 = webServiceRecepcion.getRecepcionComprobantesOfflinePort();
@@ -97,7 +97,7 @@ public class DocumentoElectronicoUtil {
 	 */
 	public static void autorizarDocumentoElectronico(String claveAcceso, Map<String, Object> datosFactura) throws CertificateException, IOException, InterruptedException {
 		try {
-			URL wsdLocationAut = new URL(AmbienteEnum.PRUEBAS.getUrlAutorizacion());
+			URL wsdLocationAut = new URL(AmbienteEnum.PRODUCCION.getUrlAutorizacion());
 			QName serviceNameAut = new QName("http://ec.gob.sri.ws.autorizacion", "AutorizacionComprobantesOfflineService");
 			AutorizacionComprobantesOfflineService webServiceAutorizacion = new AutorizacionComprobantesOfflineService(wsdLocationAut, serviceNameAut);
 			AutorizacionComprobantesOffline port2 = webServiceAutorizacion.getAutorizacionComprobantesOfflinePort();

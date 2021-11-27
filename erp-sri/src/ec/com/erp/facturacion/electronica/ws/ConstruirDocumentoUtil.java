@@ -31,7 +31,7 @@ public class ConstruirDocumentoUtil {
 	
 	public static InfoTributaria crearInfoTributaria(String tipoComprobante, Date fechaEmision, String rucFactElectronica, String secuenciaDocumento, String codigoEstablecimiento, String codigoPuntoEmision) {
 		InfoTributaria infoTributaria = new InfoTributaria();
-		infoTributaria.setAmbiente(AmbienteEnum.PRUEBAS);
+		infoTributaria.setAmbiente(AmbienteEnum.PRODUCCION);
 		infoTributaria.setTipoEmision(TipoEmisionEnum.NORMAL);
 		if(rucFactElectronica.equals(ERPConstantes.TIPO_RUC_UNO)) {
 			infoTributaria.setRazonSocial(FacturacionElectronicaEnum.RUCPRINCIPA.getRazonSocial());
