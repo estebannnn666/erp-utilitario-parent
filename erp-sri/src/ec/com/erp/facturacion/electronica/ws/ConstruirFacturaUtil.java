@@ -30,9 +30,13 @@ public class ConstruirFacturaUtil {
 		factura.setDetalles(ConstruirDocumentoUtil.crearDetallesFactura(facturaCabeceraDTO, facturaCabeceraDTO.getFacturaDetalleDTOCols()));
 		// Informacion adicionals
 		InformacionAdicional info = new InformacionAdicional();
+		CampoInfoAdicional telefono = new CampoInfoAdicional();
+		telefono.setNombre("Telefono");
+		telefono.setValue(facturaCabeceraDTO.getTelefono());
+		info.getCampoAdicional().add(telefono);
 		CampoInfoAdicional regimen = new CampoInfoAdicional();
 		regimen.setNombre("Regimen");
-		regimen.setValue("Contribuyente Regimen Microempresas");
+		regimen.setValue("Contribuyente R\u00e9gimen RIMPE");
 		info.getCampoAdicional().add(regimen);
 		if(facturaCabeceraDTO.getVendedorDTO() != null){
 			CampoInfoAdicional vendedor = new CampoInfoAdicional();
@@ -58,9 +62,9 @@ public class ConstruirFacturaUtil {
 		DecimalFormat formatoDecimales = new DecimalFormat("#.##", decimalSymbols);
 		formatoDecimales.setMinimumFractionDigits(2);
 		InfoFactura infoFactura = new InfoFactura();
-		infoFactura.setFechaEmision((new SimpleDateFormat("dd/MM/YYYY")).format(facturaCabeceraDTO.getFechaDocumento()));
+		infoFactura.setFechaEmision((new SimpleDateFormat("dd/MM/yyyy")).format(facturaCabeceraDTO.getFechaDocumento()));
 		infoFactura.setDirEstablecimiento(FacturacionElectronicaEnum.RUCPRINCIPA.getDireccion());
-		infoFactura.setObligadoContabilidad(ObligadoContabilidadEnum.NO);
+		infoFactura.setObligadoContabilidad(ObligadoContabilidadEnum.SI);
 		if(facturaCabeceraDTO.getRucDocumento().length() == 13){
 			infoFactura.setTipoIdentificacionComprador(TipoIdentificacionCompradorEnum.RUC);
 		}

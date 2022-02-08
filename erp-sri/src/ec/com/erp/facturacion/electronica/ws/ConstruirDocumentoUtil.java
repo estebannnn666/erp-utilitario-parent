@@ -73,7 +73,8 @@ public class ConstruirDocumentoUtil {
 				detalle.setCodigoAuxiliar(detalleFactura.getCodigoArticulo().toString());
 				detalle.setDescripcion(detalleFactura.getDescripcion());
 				detalle.setCantidad(detalleFactura.getCantidad().toString());
-				detalle.setPrecioUnitario(formatoDecimales.format(obtenerValorUnitarioFactura(facturaCabeceraDTO, detalleFactura)));
+//				detalle.setPrecioUnitario(formatoDecimales.format(obtenerValorUnitarioFactura(facturaCabeceraDTO, detalleFactura)));
+				detalle.setPrecioUnitario(formatoDecimales.format(detalleFactura.getValorUnidad()));
 				detalle.setPrecioTotalSinImpuesto(formatoDecimales.format(detalleFactura.getSubTotal().doubleValue()));
 				detalle.setDescuento(detalleFactura.getDescuento() == null ? "0.00" : formatoDecimales.format(detalleFactura.getDescuento().doubleValue()));
 				
@@ -119,7 +120,8 @@ public class ConstruirDocumentoUtil {
 				detalle.setCodigoInterno(detalleFactura.getArticuloDTO().getCodigoBarras());
 				detalle.setDescripcion(detalleFactura.getDescripcion());
 				detalle.setCantidad(detalleFactura.getCantidad().toString());
-				detalle.setPrecioUnitario(formatoDecimales.format(obtenerValorUnitarioNotaCredito(notaCreditoDTO, detalleFactura)));
+//				detalle.setPrecioUnitario(formatoDecimales.format(obtenerValorUnitarioNotaCredito(notaCreditoDTO, detalleFactura)));
+				detalle.setPrecioUnitario(formatoDecimales.format(detalleFactura.getValorUnidad()));
 				detalle.setPrecioTotalSinImpuesto(formatoDecimales.format(detalleFactura.getSubTotal().doubleValue()));
 				detalle.setDescuento(detalleFactura.getDescuento() == null ? "0.00" : formatoDecimales.format(detalleFactura.getDescuento().doubleValue()));
 				
@@ -151,7 +153,7 @@ public class ConstruirDocumentoUtil {
 		return detalles;
 	}
 	
-	private static BigDecimal obtenerValorUnitarioFactura(FacturaCabeceraDTO facturaCabeceraDTO, FacturaDetalleDTO facturaDetalleDTO){
+	public static BigDecimal obtenerValorUnitarioFactura(FacturaCabeceraDTO facturaCabeceraDTO, FacturaDetalleDTO facturaDetalleDTO){
 		BigDecimal valorUnitario;
 		if(facturaCabeceraDTO.getTipoCliente().equals(ERPConstantes.CODIGO_CATALOGO_VALOR_CLIENTE_MINORISTA)) {
 			valorUnitario = BigDecimal.valueOf(facturaDetalleDTO.getArticuloDTO().getPrecioMinorista().doubleValue() * facturaDetalleDTO.getArticuloUnidadManejoDTO().getValorUnidadManejo());
@@ -161,7 +163,7 @@ public class ConstruirDocumentoUtil {
 		return valorUnitario;
 	}
 	
-	private static BigDecimal obtenerValorUnitarioNotaCredito(NotaCreditoDTO notaCreditoDTO, NotaCreditoDetalleDTO notaCreditoDetalleDTO){
+	public static BigDecimal obtenerValorUnitarioNotaCredito(NotaCreditoDTO notaCreditoDTO, NotaCreditoDetalleDTO notaCreditoDetalleDTO){
 		BigDecimal valorUnitario;
 		if(notaCreditoDTO.getTipoCliente().equals(ERPConstantes.CODIGO_CATALOGO_VALOR_CLIENTE_MINORISTA)) {
 			valorUnitario = BigDecimal.valueOf(notaCreditoDetalleDTO.getArticuloDTO().getPrecioMinorista().doubleValue() * notaCreditoDetalleDTO.getArticuloUnidadManejoDTO().getValorUnidadManejo());

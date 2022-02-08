@@ -49,7 +49,7 @@ public class ConstruirNotaCreditoUtil {
 		DecimalFormat formatoDecimales = new DecimalFormat("#.##", decimalSymbols);
 		formatoDecimales.setMinimumFractionDigits(2);
 		InfoNotaCredito infoNotaCredito = new InfoNotaCredito();
-		infoNotaCredito.setFechaEmision((new SimpleDateFormat("dd/MM/YYYY")).format(new Date()));
+		infoNotaCredito.setFechaEmision((new SimpleDateFormat("dd/MM/yyyy")).format(new Date()));
 		infoNotaCredito.setDirEstablecimiento(FacturacionElectronicaEnum.RUCPRINCIPA.getDireccion());
 		if(notaCreditoDTO.getRucCliente().length() == 13){
 			infoNotaCredito.setTipoIdentificacionComprador(TipoIdentificacionCompradorEnum.RUC);
@@ -62,11 +62,11 @@ public class ConstruirNotaCreditoUtil {
 		}		
 		infoNotaCredito.setRazonSocialComprador(notaCreditoDTO.getRazonSocial());
 		infoNotaCredito.setIdentificacionComprador(notaCreditoDTO.getRucCliente());
-		infoNotaCredito.setObligadoContabilidad(ObligadoContabilidadEnum.NO);
+		infoNotaCredito.setObligadoContabilidad(ObligadoContabilidadEnum.SI);
 		infoNotaCredito.setCodDocModificado(TipoComprobanteEnum.FACTURA.getCodigo());
 		infoNotaCredito.setNumDocModificado(notaCreditoDTO.getNumeroComprobante());
 		infoNotaCredito.setTotalConImpuestos(ConstruirDocumentoUtil.crearTotalImpuestosNotaCredito(notaCreditoDTO));
-		infoNotaCredito.setFechaEmisionDocSustento((new SimpleDateFormat("dd/MM/YYYY")).format(notaCreditoDTO.getFechaEmisionFactura()));
+		infoNotaCredito.setFechaEmisionDocSustento((new SimpleDateFormat("dd/MM/yyyy")).format(notaCreditoDTO.getFechaEmisionFactura()));
 		infoNotaCredito.setTotalSinImpuestos(notaCreditoDTO.getSubTotal().setScale(2, RoundingMode.HALF_UP));
 		infoNotaCredito.setValorModificacion(notaCreditoDTO.getTotalCuenta().setScale(2, RoundingMode.HALF_UP));
 		infoNotaCredito.setMoneda(MonedaEnum.DOLAR);

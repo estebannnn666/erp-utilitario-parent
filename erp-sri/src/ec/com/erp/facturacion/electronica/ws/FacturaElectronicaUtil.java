@@ -212,8 +212,11 @@ public class FacturaElectronicaUtil {
 			params.put("REGIMEN_MICROEMPRESAS", "N/A");
 			params.put("VENDEDOR", "N/A");
 			params.put("CIUDAD", "N/A");
+			params.put("TELEFONO", "N/A");
 			for(CampoInfoAdicional campoAdiciona: facturaSRI.getInfoAdicional().getCampoAdicional()){
-				
+				if(campoAdiciona.getNombre().equals("Telefono")){
+					params.put("TELEFONO", campoAdiciona.getValue().toUpperCase());
+				}
 				if(campoAdiciona.getNombre().equals("Regimen")){
 					params.put("REGIMEN_MICROEMPRESAS", campoAdiciona.getValue().toUpperCase());
 				}
